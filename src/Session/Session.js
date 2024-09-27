@@ -9,9 +9,9 @@ function Session() {
           Edit <code>src/Session.js</code> and save to reload.
         </p>
       </header>
-      <body>
+      
         <User />
-      </body>
+      
     </div>
   );
 }

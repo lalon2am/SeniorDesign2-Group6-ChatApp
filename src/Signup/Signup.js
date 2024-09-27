@@ -1,15 +1,23 @@
 import './Signup.css';
+import React, {useState} from 'react';
+// src/Modal.js
 
-function Signup() {
-  return (
-    <div className="Signup">
-      <header className="Signup-header">
-        <p>
-          Edit <code>src/Signup.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
-}
+
+
+function Signup ({ isOpen, onClose, children }) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="modal-overlay">
+            <div className="modal">
+                <button onClick={onClose} className="close-button">Return to login menu</button>
+                {children}
+            </div>
+        </div>
+    );
+};
+
+
+
 
 export default Signup;

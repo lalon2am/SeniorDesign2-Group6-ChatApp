@@ -10,12 +10,12 @@ function App() {
     <div className="App">
       <header className="App-header">
       </header>
-      <body>
+      
         <Auth />
         <Session />
         <Chat />
         <Send />
-      </body>
+      
     </div>
   );
 }

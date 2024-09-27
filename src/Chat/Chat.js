@@ -9,9 +9,9 @@ function Chat() {
           Edit <code>src/Chat.js</code> and save to reload.
         </p>
       </header>
-      <body>
+      
         <Message />
-      </body>
+      
     </div>
   );
 }
