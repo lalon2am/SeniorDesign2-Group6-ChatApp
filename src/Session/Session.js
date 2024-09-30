@@ -1,7 +1,9 @@
 import './Session.css';
 import User from '../User/User';
 
-function Session() {
+function Session({ isOpen }) {
+  if (!isOpen) return null;
+
   return (
     <div className="Session">
       <header className="Session-header">
@@ -9,9 +11,9 @@ function Session() {
           Edit <code>src/Session.js</code> and save to reload.
         </p>
       </header>
-      
-        <User />
-      
+
+      <User />
+
     </div>
   );
 }
