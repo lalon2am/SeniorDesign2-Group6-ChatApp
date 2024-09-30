@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
 
-    if (savedUser != null) {
+    if (savedUser !== null && JSON.parse(savedUser) !== null) {
       setAuthOpen(false);
       setAppOpen(true);
     } else {
