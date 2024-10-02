@@ -5,3 +5,6 @@ The frontend is a ReactJS app which connects to the backend using REST API reque
 The backend is a Spring Boot app using Spring MVC to host REST API endpoints for the frontend to access, and using JDBC to connect to the database. Spring security will be used to authenticate between endpoints.
 
 The frontend is hosted [here](https://cps410chatappfrontend.onrender.com)
+The backend is hosted [here]()
+
+To run the application, visit the frontend and backend folders for instructions on running locally.
