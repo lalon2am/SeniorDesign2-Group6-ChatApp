@@ -1,6 +1,5 @@
 import './Auth.css';
 import Signup from '../Signup/Signup';
-import Popup from "reactjs-popup";
 import React, { useState } from 'react';
 function Auth({ isOpen, closeAuth }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
