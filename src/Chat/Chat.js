@@ -1,7 +1,9 @@
 import './Chat.css';
 import Message from '../Message/Message';
 
-function Chat() {
+function Chat({ isOpen }) {
+  if (!isOpen) return null;
+
   return (
     <div className="Chat">
       <header className="Chat-header">
@@ -9,9 +11,9 @@ function Chat() {
           Edit <code>src/Chat.js</code> and save to reload.
         </p>
       </header>
-      <body>
-        <Message />
-      </body>
+
+      <Message />
+
     </div>
   );
 }
