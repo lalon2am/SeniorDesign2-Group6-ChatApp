@@ -14,6 +14,9 @@ function Signup({ isOpen, onClose }) {
           //passed checks, login with username and password
           alert(`Username: ${username}, Password: ${password}`);
           // Proceed with your form submission or other logic here
+          localStorage.setItem('username', username);
+          localStorage.setItem('password', password);
+
         }
       };
     
