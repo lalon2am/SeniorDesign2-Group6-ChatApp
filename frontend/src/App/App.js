@@ -4,6 +4,7 @@ import Chat from '../Chat/Chat'
 import Send from '../Send/Send'
 import Auth from '../Auth/Auth'
 import React, { useState, useEffect } from 'react';
+import { getAuth } from 'firebase/auth';
 
 function App() {
   const [isAuthOpen, setAuthOpen] = useState(true);
@@ -11,23 +12,29 @@ function App() {
 
   // Get the saved login status 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in, show the app
+        setAuthOpen(true);
+        setAppOpen(false);
+      } else {
+        // No user is signed in, show the Auth screen
+        setAuthOpen(true);
+        setAppOpen(false);
+      }
+    });
 
-    if (savedUser !== null && JSON.parse(savedUser) !== null) {
-      setAuthOpen(false);
-      setAppOpen(true);
-    } else {
-      setAuthOpen(true);
-      setAppOpen(false);
-    }
+    // Clean up the subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   const closeAuth = () => {
     console.log("close auth called");
-    localStorage.setItem('user', JSON.stringify({ username: "test", password: "test" }));
+    // The login logic would normally set the user in Firebase instead of localStorage
     setAuthOpen(false);
     setAppOpen(true);
-  }
+  };
 
   return (
     <div className="App">
@@ -38,7 +45,6 @@ function App() {
       <Session isOpen={isAppOpen} />
       <Chat isOpen={isAppOpen} />
       <Send isOpen={isAppOpen} />
-
     </div>
   );
 }
