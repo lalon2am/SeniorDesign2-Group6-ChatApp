@@ -3,7 +3,6 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { useState, useEffect } from 'react';
 import Signup from '../Signup/Signup';
 import { saveUserToFirestore } from '../firestoreService';
-
 function Auth({ isOpen, closeAuth }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -26,18 +25,18 @@ function Auth({ isOpen, closeAuth }) {
       alert('All fields are required');
       return;
     }
-  
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       alert('Please enter a valid email address');
       return;
     }
-  
+
     if (password.length < 6) {
       alert('Password must be at least 6 characters long');
       return;
     }
-  
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Sign up successful!');
@@ -87,16 +86,16 @@ function Auth({ isOpen, closeAuth }) {
   }, [auth]);
 
   if (!isOpen) return null;
-  
+
   return (
     <div className="container">
       {/* Left Side: General Welcome Message */}
       <div className="left-side">
-      <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speech%20Balloon.png" alt="Speech Balloon" width="50" height="50" />
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speech%20Balloon.png" alt="Speech Balloon" width="50" height="50" />
         <h1>ChatMessaging App</h1>
         <p>Connect easier with your friends, classmates, or collegues. Join conversations, and have fun while meeting new friends!</p>
       </div>
-  
+
       {/* Right Side: Login Section */}
       <div className="right-side">
         <div className="Auth">
@@ -105,33 +104,33 @@ function Auth({ isOpen, closeAuth }) {
               <div className="Auth-box">
                 <h2>Log In</h2>
                 <p>Email:</p>
-                <input 
-                  type="email" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
-                  placeholder="Enter your email" 
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
                 />
                 <p>Password:</p>
-                <input 
-                  type="password" 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)} 
-                  placeholder="Enter your password" 
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
                 />
-                
+
                 <button onClick={handleLogin}>Log In</button>
-  
+
                 <p>Don't have an account?</p>
                 <button onClick={openModal}>Register</button>
               </div>
             </>
           )}
-  
+
           {/* Signup Modal */}
-          <Signup 
-            isOpen={isModalOpen} 
-            onClose={closeModal} 
-            handleSignUp={handleSignUp} 
+          <Signup
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            handleSignUp={handleSignUp}
             setName={setName}
           />
         </div>

@@ -1,4 +1,4 @@
-import './Signup.css'; 
+import './Signup.css';
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import { auth, firestore } from '../firebase'; // Ensure you import your Firestore instance
@@ -37,8 +37,8 @@ function Signup({ isOpen, onClose }) {
                 uid: user.uid,
                 username: username,
                 email: user.email,
-              });
-            
+            });
+
             //const userCollection = collection(firestore, 'users');
             //await addDoc(userCollection, {
             //    uid: user.uid,
@@ -120,7 +120,6 @@ function Signup({ isOpen, onClose }) {
             console.error('GitHub sign-up error:', error);
         }
     };
-
     if (!isOpen) return null;
 
     return (
