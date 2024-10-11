@@ -37,3 +37,11 @@
     transform: rotate(360deg);
   }
 }
+.textbox {
+  border: 2px solid blue; /* Blue border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Space inside the box */
+  background-color: #f9f9f9; /* Light background color */
+  max-width: 600px; /* Optional: Set a maximum width */
+  margin: 20px auto; /* Center the box horizontally with margin */
+}

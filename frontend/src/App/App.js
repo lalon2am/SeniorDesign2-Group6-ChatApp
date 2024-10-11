@@ -43,8 +43,10 @@ function App() {
 
       <Auth isOpen={isAuthOpen} closeAuth={closeAuth} />
       <Session isOpen={isAppOpen} />
+      <div className="textbox">
       <Chat isOpen={isAppOpen} />
       <Send isOpen={isAppOpen} />
+      </div>
     </div>
   );
 }
