@@ -1,25 +1,12 @@
 import './Message.css';
-
-function Message() {
-  const messages = [
-    { id: 1, sender: 'Alice', text: 'Hello, how are you?' },
-    { id: 2, sender: 'Bob', text: 'I am good, thanks! How about you?' },
-    { id: 3, sender: 'Alice', text: 'I am doing well, thank you!' },
-    { id: 4, sender: 'Charlie', text: 'Hey everyone!' },
-];
-
-  return (
-    <div>
-        <h2>Messages</h2>
+function Message({ text,user,timestamp }) {
+    return (
         <div>
-            {messages.map((message) => (
-                <div key={message.id}>
-                    <strong>{message.sender}:</strong> {message.text}
-                </div>
-            ))}
+            <div>
+                <strong>{user}:</strong> {text} <small className='timestamp'>({timestamp})</small>
+            </div>
         </div>
-    </div>
-);
+    );
 }
 
 export default Message;

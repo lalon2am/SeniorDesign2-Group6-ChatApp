@@ -24,9 +24,9 @@ function Send({ isOpen, onSendMessage }) {
   async function onSendMessage(message){
       //do stuff here!
       console.log(message);
-      try {
-        const response = await fetch('http://localhost:3000/savechat', {
-            method: 'POST',
+      try {//http://localhost:3000/savechat
+        const response = await fetch('https://cps410chatapp.onrender.com/', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -64,7 +64,7 @@ function Send({ isOpen, onSendMessage }) {
           onChange={handleInputChange}
           placeholder="Type your message here..."
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button className='sendButton' onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );
