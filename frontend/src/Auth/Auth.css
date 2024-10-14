@@ -1,14 +1,5 @@
 /* Global Styles */
-body {
-  font-family: 'Century Gothic', sans-serif;
-  font-size: 12px;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f4f8; /* Light background for better readability */
-  background-image: url('https://i.imgur.com/JrXYJ5P.png'); /* Use a starry background image */
-  background-repeat: repeat; /* Repeat the image for a continuous starry effect */
-  background-size: cover; /* Ensure the background covers the entire area */
-}
+
 
 .container {
   display: flex;
