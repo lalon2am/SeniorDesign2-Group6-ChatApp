@@ -13,11 +13,14 @@ COPY build.gradle settings.gradle ./
 # Ensure the Gradle wrapper has execute permissions
 RUN chmod +x ./gradlew
 
+COPY src ./src
+
 # Download dependencies without building the app
 RUN ./gradlew build -x test --no-daemon
 
 # Copy the source code
-COPY src ./src
+
+EXPOSE 8080
 
 # Command to run the Spring Boot app using the Gradle wrapper
 CMD ["./gradlew", "bootRun", "--no-daemon"]
