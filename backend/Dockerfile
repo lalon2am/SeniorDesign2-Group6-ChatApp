@@ -1,5 +1,7 @@
+# Use a minimal JDK image
 FROM openjdk:21-jdk
 
+# Set the working directory inside the container
 WORKDIR /app
 
 # Install xargs (findutils package)
@@ -13,14 +15,18 @@ COPY build.gradle settings.gradle ./
 # Ensure the Gradle wrapper has execute permissions
 RUN chmod +x ./gradlew
 
+# Copy the source code
 COPY src ./src
 
-# Download dependencies without building the app
-RUN ./gradlew build -x test --no-daemon
+# Build the Spring Boot application as a JAR without running tests
+RUN ./gradlew clean build -x test --no-daemon
 
-# Copy the source code
+# Copy the JAR file into the container
+# Assuming the JAR file is generated in build/libs/your-app.jar
+COPY build/libs/*.jar app.jar
 
+# Expose port 8080 (Spring Boot default port)
 EXPOSE 8080
 
-# Command to run the Spring Boot app using the Gradle wrapper
-CMD ["./gradlew", "bootRun", "--no-daemon"]
+# Command to run the Spring Boot app using the JAR file
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
