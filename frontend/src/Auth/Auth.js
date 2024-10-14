@@ -118,10 +118,10 @@ function Auth({ isOpen, closeAuth }) {
                   placeholder="Enter your password"
                 />
 
-                <button onClick={handleLogin}>Log In</button>
+                <button className='authButton' onClick={handleLogin}>Log In</button>
 
                 <p>Don't have an account?</p>
-                <button onClick={openModal}>Register</button>
+                <button className='authButton' onClick={openModal}>Register</button>
               </div>
             </>
           )}
