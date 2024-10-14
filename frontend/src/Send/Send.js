@@ -21,9 +21,27 @@ function Send({ isOpen, onSendMessage }) {
     },
 };
   if (!isOpen) return null;
-  function onSendMessage(message){
+  async function onSendMessage(message){
       //do stuff here!
       console.log(message);
+      try {
+        const response = await fetch('http://localhost:3000/savechat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: message,
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Success:', data);
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
   }
   const handleInputChange = (event) => {
     setMessage(event.target.value);
