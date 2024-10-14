@@ -27,5 +27,4 @@ yarn-error.log*
 /frontend/node_modules/.cache
 
 /backend/.gradle/
-/backend/build.gradle
 /backend/.idea
