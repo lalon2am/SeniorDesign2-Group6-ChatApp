@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.springboot.SpringbootApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-09T13:51:51" hostname="Drews-MacBook-Pro-1657.local" time="1.0">
+<testsuite name="com.example.springboot.SpringbootApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-14T23:24:56" hostname="LAPTOP-UCQGFUC5" time="1.316">
   <properties/>
-  <testcase name="contextLoads()" classname="com.example.springboot.SpringbootApplicationTests" time="1.0"/>
-  <system-out><![CDATA[09:51:49.464 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.springboot.SpringbootApplicationTests]: SpringbootApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-09:51:49.582 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.springboot.SpringbootApplication for test class com.example.springboot.SpringbootApplicationTests
+  <testcase name="contextLoads()" classname="com.example.springboot.SpringbootApplicationTests" time="1.316"/>
+  <system-out><![CDATA[19:24:50.839 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.springboot.SpringbootApplicationTests]: SpringbootApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:24:51.019 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.springboot.SpringbootApplication for test class com.example.springboot.SpringbootApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,10 +14,10 @@
 
  :: Spring Boot ::                (v3.3.4)
 
-2024-10-09T09:51:49.975-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : Starting SpringbootApplicationTests using Java 21.0.4 with PID 88246 (started by drewburton in /Users/drewburton/Library/CloudStorage/OneDrive-CentralMichiganUniversity/Fall2024/CPS410/CPS410ChatApp/backend)
-2024-10-09T09:51:49.977-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : No active profile set, falling back to 1 default profile: "default"
-2024-10-09T09:51:51.629-04:00  INFO 88246 --- [springboot] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
-2024-10-09T09:51:51.702-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : Started SpringbootApplicationTests in 1.967 seconds (process running for 3.247)
+2024-10-14T19:24:52.134-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : Starting SpringbootApplicationTests using Java 21.0.4 with PID 5360 (started by arjay in C:\Users\arjay\OneDrive\Documents\GitHub\CPS410ChatApp\backend)
+2024-10-14T19:24:52.136-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2024-10-14T19:24:55.999-04:00  INFO 5360 --- [springboot] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-14T19:24:56.121-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.s.SpringbootApplicationTests         : Started SpringbootApplicationTests in 4.811 seconds (process running for 7.337)
 Let's inspect the beans provided by Spring Boot:
 applicationAvailability
 applicationTaskExecutor
@@ -318,7 +318,7 @@ websocketServletWebServerCustomizer
 welcomePageHandlerMapping
 welcomePageNotAcceptableHandlerMapping
 ]]></system-out>
-  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/drewburton/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.19/154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1/byte-buddy-agent-1.14.19.jar)
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\arjay\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
 WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
 WARNING: Dynamic loading of agents will be disallowed by default in a future release

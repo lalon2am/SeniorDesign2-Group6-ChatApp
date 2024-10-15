@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.springboot.WebAppControllerITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-09T13:51:53" hostname="Drews-MacBook-Pro-1657.local" time="0.212">
+<testsuite name="com.example.springboot.WebAppControllerITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-14T23:24:59" hostname="LAPTOP-UCQGFUC5" time="0.38">
   <properties/>
-  <testcase name="getHello()" classname="com.example.springboot.WebAppControllerITest" time="0.212"/>
-  <system-out><![CDATA[2024-10-09T09:51:52.827-04:00  INFO 88246 --- [springboot] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.springboot.WebAppControllerITest]: WebAppControllerITest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-10-09T09:51:52.830-04:00  INFO 88246 --- [springboot] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.springboot.SpringbootApplication for test class com.example.springboot.WebAppControllerITest
+  <testcase name="getHello()" classname="com.example.springboot.WebAppControllerITest" time="0.38"/>
+  <system-out><![CDATA[2024-10-14T19:24:57.697-04:00  INFO 5360 --- [springboot] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.springboot.WebAppControllerITest]: WebAppControllerITest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-14T19:24:57.701-04:00  INFO 5360 --- [springboot] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.springboot.SpringbootApplication for test class com.example.springboot.WebAppControllerITest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,16 +14,16 @@
 
  :: Spring Boot ::                (v3.3.4)
 
-2024-10-09T09:51:52.860-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : Starting WebAppControllerITest using Java 21.0.4 with PID 88246 (started by drewburton in /Users/drewburton/Library/CloudStorage/OneDrive-CentralMichiganUniversity/Fall2024/CPS410/CPS410ChatApp/backend)
-2024-10-09T09:51:52.860-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : No active profile set, falling back to 1 default profile: "default"
-2024-10-09T09:51:53.237-04:00  INFO 88246 --- [springboot] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
-2024-10-09T09:51:53.254-04:00  INFO 88246 --- [springboot] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-10-09T09:51:53.255-04:00  INFO 88246 --- [springboot] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-10-09T09:51:53.302-04:00  INFO 88246 --- [springboot] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-10-09T09:51:53.303-04:00  INFO 88246 --- [springboot] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 440 ms
-2024-10-09T09:51:53.482-04:00  INFO 88246 --- [springboot] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
-2024-10-09T09:51:53.524-04:00  INFO 88246 --- [springboot] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 53180 (http) with context path '/'
-2024-10-09T09:51:53.531-04:00  INFO 88246 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : Started WebAppControllerITest in 0.696 seconds (process running for 5.076)
+2024-10-14T19:24:57.762-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : Starting WebAppControllerITest using Java 21.0.4 with PID 5360 (started by arjay in C:\Users\arjay\OneDrive\Documents\GitHub\CPS410ChatApp\backend)
+2024-10-14T19:24:57.762-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : No active profile set, falling back to 1 default profile: "default"
+2024-10-14T19:24:58.585-04:00  INFO 5360 --- [springboot] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-10-14T19:24:58.616-04:00  INFO 5360 --- [springboot] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-14T19:24:58.617-04:00  INFO 5360 --- [springboot] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-10-14T19:24:58.737-04:00  INFO 5360 --- [springboot] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-14T19:24:58.739-04:00  INFO 5360 --- [springboot] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 971 ms
+2024-10-14T19:24:59.112-04:00  INFO 5360 --- [springboot] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-14T19:24:59.196-04:00  INFO 5360 --- [springboot] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 58185 (http) with context path '/'
+2024-10-14T19:24:59.203-04:00  INFO 5360 --- [springboot] [    Test worker] c.e.springboot.WebAppControllerITest     : Started WebAppControllerITest in 1.495 seconds (process running for 10.42)
 Let's inspect the beans provided by Spring Boot:
 applicationAvailability
 applicationTaskExecutor
@@ -328,9 +328,9 @@ webServerFactoryCustomizerBeanPostProcessor
 websocketServletWebServerCustomizer
 welcomePageHandlerMapping
 welcomePageNotAcceptableHandlerMapping
-2024-10-09T09:51:53.647-04:00  INFO 88246 --- [springboot] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-10-09T09:51:53.648-04:00  INFO 88246 --- [springboot] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-10-09T09:51:53.649-04:00  INFO 88246 --- [springboot] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-14T19:24:59.438-04:00  INFO 5360 --- [springboot] [0-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-14T19:24:59.438-04:00  INFO 5360 --- [springboot] [0-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-14T19:24:59.439-04:00  INFO 5360 --- [springboot] [0-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
