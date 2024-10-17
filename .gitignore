@@ -28,3 +28,4 @@ yarn-error.log*
 
 /backend/.gradle/
 /backend/.idea
+/backend/build/
