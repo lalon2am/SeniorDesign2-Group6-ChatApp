@@ -63,6 +63,11 @@ public class WebAppController {
         }
     }
 
+    @GetMapping("/")
+    public ResponseEntity<String> getMessages() {
+        return ResponseEntity.ok().build();
+    }
+
 //    @GetMapping("/")
 //    public String index() {
 //        return "Greetings from Spring Boot!";
