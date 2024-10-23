@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.List;
 
 @RestController
 public class WebAppController {
@@ -70,8 +71,8 @@ public class WebAppController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<String> getMessages() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<Message>> getMessages() {
+        return ResponseEntity.ok(List.of(new Message("test", "test", Instant.MIN)));
     }
 
 //    @GetMapping("/")
