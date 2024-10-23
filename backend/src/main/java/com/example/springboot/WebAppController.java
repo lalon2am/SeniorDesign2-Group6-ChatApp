@@ -1,6 +1,7 @@
 package com.example.springboot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,9 @@ public class WebAppController {
         }
     }
 
+    @Autowired
+    private WebAppService service;
+
     @PostMapping("/")
     public ResponseEntity<String> addMessage(@RequestBody Message message) {
         // Display the raw JSON input
@@ -72,7 +76,10 @@ public class WebAppController {
 
     @GetMapping("/")
     public ResponseEntity<List<Message>> getMessages() {
-        return ResponseEntity.ok(List.of(new Message("test", "test", Instant.MIN)));
+        List<Message> message = service.getChats();
+        if (message.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(message);
     }
 
 //    @GetMapping("/")

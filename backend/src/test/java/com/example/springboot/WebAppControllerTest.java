@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,7 +32,7 @@ public class WebAppControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
-	@Mock
+	@MockBean
 	private WebAppService service;
 
 //	@Test
@@ -66,9 +67,6 @@ public class WebAppControllerTest {
 	@Test
 	public void emptyChatsReturnsNoContent() throws Exception {
 		// arrange
-		ObjectMapper mapper = new ObjectMapper();
-		String expected = mapper.writeValueAsString(List.of());
-
 		when(service.getChats()).thenReturn(List.of());
 
 		// act
@@ -77,6 +75,6 @@ public class WebAppControllerTest {
 		String responseString = result.getResponse().getContentAsString();
 
 		// assert
-		assertEquals(expected, responseString);
+		assertEquals("", responseString);
 	}
 }
