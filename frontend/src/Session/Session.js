@@ -50,34 +50,10 @@ function Session({ isOpen, onLogout, setAuthOpen }) {
         <h1 style={{ color: 'lavender', fontSize: '14px' }}>
           Welcome{username ? ` back, ${username}` : ''}!
         </h1>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
     </header>
-      <div className="dashboard">
-        <p>Explore the features available to you:</p>
-        <div className="feature-container">
-          <div className="feature-card">
-            <h2>Message</h2>
-            <p>Send and receive messages with friends.</p>
-            <button onClick={() => console.log('Sending a Message')}>Send Message</button>
-          </div>
-          <div className="feature-card">
-            <h2>Chat</h2>
-            <p>Join group chats and connect with others.</p>
-            <button onClick={() => console.log('Starting Group Chat')}>Start Chat</button>
-          </div>
-          <div className="feature-card">
-            <h2>Friends</h2>
-            <p>Manage your friends list and stay connected.</p>
-            <button onClick={() => console.log('Navigating to Friends')}>View Friends</button>
-          </div>
-          <div className="feature-card">
-            <h2>UserProfile</h2>
-            <p>View and edit your profile information.</p>
-            <button onClick={() => console.log('Navigating to Profile')}>View Profile</button>
-          </div>
-        </div>
-      </div>
+      
+      
     </div>
   );
 }

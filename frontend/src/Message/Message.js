@@ -1,15 +1,12 @@
 import './Message.css';
-
-function Message() {
-  return (
-    <div className="Message">
-      <header className="Message-header">
-        <p>
-          Edit <code>src/Message.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+function Message({ text,user,timestamp }) {
+    return (
+        <div>
+            <div>
+                <strong>{user}:</strong> {text} <small className='timestamp'>({timestamp})</small>
+            </div>
+        </div>
+    );
 }
 
 export default Message;

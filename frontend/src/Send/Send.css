@@ -1,39 +1,39 @@
 .Send {
-  text-align: center;
+  border: 2px solid #007BFF; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  padding: 3px; /* Space inside the box */
+  background-color: #f9f9f9; /* Background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 10px auto; /* Center the box horizontally */
 }
 
-.Send-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Send-input {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .Send-logo {
-    animation: Send-logo-spin infinite 20s linear;
-  }
+.Send-input input {
+  flex: 1; /* Allow input to take available space */
+  width: 300px; /* Set a fixed width */
+  padding: 10px; /* Space inside the input */
+  border: 1px solid #ccc; /* Input border */
+  border-radius: 4px; /* Rounded corners for input */
+  margin-right: 10px; /* Space between input and button */
 }
 
-.Send-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+.Send-input button {
+  padding: 10px 15px; /* Space inside the button */
+  background-color: #007BFF; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners for button */
+  cursor: pointer; /* Change cursor on hover */
 }
 
-.Send-link {
-  color: #61dafb;
+.Send-input button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
 }
-
-@keyframes Send-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.sendButton {
+  width:40%;
 }
