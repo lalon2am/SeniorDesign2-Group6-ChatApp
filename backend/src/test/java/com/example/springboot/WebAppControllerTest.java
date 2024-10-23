@@ -1,9 +1,13 @@
 package com.example.springboot;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.time.Instant;
+import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,7 +38,13 @@ public class WebAppControllerTest {
 	@Test
 	public void getChats() throws Exception {
 		// arrange
-		String expected = "";
+		ObjectMapper mapper = new ObjectMapper();
+		JavaTimeModule module = new JavaTimeModule();
+		mapper.registerModule(module);
+		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+
+		String expected = mapper.writeValueAsString(List.of(new WebAppController.Message("test", "test", Instant.MIN)));
 
 		// act
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
@@ -39,6 +52,6 @@ public class WebAppControllerTest {
 		String responseString = result.getResponse().getContentAsString();
 
 		// assert
-		assert(expected.equals(responseString));
+		assertEquals(expected, responseString);
 	}
 }

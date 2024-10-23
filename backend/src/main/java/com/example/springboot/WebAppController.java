@@ -18,6 +18,12 @@ public class WebAppController {
         private String user;
         private Instant timestamp;
 
+        public Message(String text, String user, Instant timestamp) {
+            this.text = text;
+            this.user = user;
+            this.timestamp = timestamp;
+        }
+
         // Getters and Setters
         public String getText() {
             return text;
