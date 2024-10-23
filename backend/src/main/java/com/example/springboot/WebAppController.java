@@ -63,8 +63,8 @@ public class WebAppController {
         }
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
+//    @GetMapping("/")
+//    public String index() {
+//        return "Greetings from Spring Boot!";
+//    }
 }
