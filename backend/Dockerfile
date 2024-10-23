@@ -1,5 +1,5 @@
-# Use a minimal JDK image
-FROM openjdk:21-jdk
+# Stage 1: Build the application
+FROM openjdk:21-jdk AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -21,9 +21,14 @@ COPY src ./src
 # Build the Spring Boot application as a JAR without running tests
 RUN ./gradlew clean build -x test --no-daemon
 
-# Copy the JAR file into the container
-# Assuming the JAR file is generated in build/libs/your-app.jar
-COPY build/libs/*.jar app.jar
+# Stage 2: Run the application
+FROM openjdk:21-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR file from the build stage into the runtime stage
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Expose port 8080 (Spring Boot default port)
 EXPOSE 8080
