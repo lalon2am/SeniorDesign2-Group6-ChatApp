@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Chat from './Chat';
 
-test('renders learn react link', () => {
-	render(<Chat />);
-	const linkElement = screen.getByText(/learn react/i);
-	expect(linkElement).toBeInTheDocument();
+test("renders load message while messages are being retrieved", () => {
+	const { getByText } = render(<Chat isOpen={true} />);
+	expect(getByText("Loading...")).toBeInTheDocument();
 });
