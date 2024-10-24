@@ -32,6 +32,7 @@ function Chat({ isOpen }) {
     <div>
       <h2>Messages</h2>
       <div>
+        <h3>Loading...</h3>
       </div>
     </div>
   );

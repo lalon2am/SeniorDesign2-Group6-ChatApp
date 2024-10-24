@@ -37,15 +37,15 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App" data-testid="app-container">
       <header className="App-header">
       </header>
 
       <Auth isOpen={isAuthOpen} closeAuth={closeAuth} />
       <Session isOpen={isAppOpen} />
       <div className="textbox">
-      <Chat isOpen={isAppOpen} />
-      <Send isOpen={isAppOpen} />
+        <Chat isOpen={isAppOpen} />
+        <Send isOpen={isAppOpen} />
       </div>
     </div>
   );
