@@ -32,6 +32,18 @@ test('renders load message while messages are being retrieved', async () => {
 	})
 });
 
+test('renders error message when messages are not retrieved', async () => {
+	global.fetch = jest.fn(() => new Promise((_, reject) => setTimeout(() => reject(new Error('Failed to fetch')), 100)));
+	await act(async () => {
+		render(<Chat isOpen={true} />)
+	});
+	expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+	await waitFor(() => {
+		expect(screen.getByText('Unable to load messages at this time.')).toBeInTheDocument();
+	})
+});
+
 test('calls load message when component is opened', async () => {
 	await act(async () => {
 		render(<Chat isOpen={true} />);
