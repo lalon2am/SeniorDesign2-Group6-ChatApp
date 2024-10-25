@@ -8,6 +8,6 @@ import java.util.List;
 @Service
 public class WebAppService {
     public List<WebAppController.Message> getChats() {
-        return null;
+        return List.of(new WebAppController.Message("test", "test", Instant.now()));
     }
 }
