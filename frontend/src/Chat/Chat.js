@@ -1,34 +1,38 @@
 import './Chat.css';
 import Message from '../Message/Message';
-
-/*
-{ id: 1, sender: 'Alice', text: 'Hello, how are you?', timestamp: new Date('2024-01-01T14:30:00.000Z').getTime() + Math.floor(Math.random() * 86400000) },
-{ id: 2, sender: 'Bob', text: 'I am good, thanks! How about you?', timestamp: new Date('2024-01-01T14:30:00.000Z').getTime() + Math.floor(Math.random() * 86400000) },
-{ id: 3, sender: 'Alice', text: 'I am doing well, thank you!', timestamp: new Date('2024-01-01T14:30:00.000Z').getTime() + Math.floor(Math.random() * 86400000) },
-{ id: 4, sender: 'Charlie', text: 'Hey everyone!', timestamp: new Date('2024-01-01T14:30:00.000Z').getTime() + Math.floor(Math.random() * 86400000) },
-*/
-
-/*
-{messages.map((message) => {
-          const date = new Date(message.timestamp);
-          const formattedTime = `${date.toLocaleDateString()}`;
-          return (
-            <Message
-              key={message.id}
-              text={message.text}
-              user={message.sender}
-              timestamp={formattedTime}
-            />
-
-          );
-        })}
-*/
+import React, { useEffect, useState } from 'react';
 
 function Chat({ isOpen }) {
-  if (!isOpen) return null;
-  const messages = [];
+  const [messages, setMessages] = useState([]);
+  const loadMessages = async () => {
+    try {
+      const response = await fetch('https://localhost:8080/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  return (
+      if (response.ok) {
+        const json = await response.json();
+        setMessages(json);
+      } else {
+        console.error('Failed to load messages:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      loadMessages();
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  if (messages.length == 0) return (
     <div>
       <h2>Messages</h2>
       <div>
@@ -36,6 +40,26 @@ function Chat({ isOpen }) {
       </div>
     </div>
   );
+
+  return (<div>
+    <h2>Messages</h2>
+    <div>
+      {messages.map((message) => {
+        const date = new Date(message.timestamp);
+        const formattedTime = `${date.toLocaleDateString()}`;
+        return (
+          <Message
+            key={message.id}
+            text={message.text}
+            user={message.sender}
+            timestamp={formattedTime}
+          />
+
+        );
+      })}
+    </div>
+  </div>);
+
 }
 
 export default Chat;
