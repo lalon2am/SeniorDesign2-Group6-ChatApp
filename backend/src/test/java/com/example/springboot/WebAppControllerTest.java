@@ -50,7 +50,7 @@ public class WebAppControllerTest {
 		mapper.registerModule(module);
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-		WebAppController.Message message = new WebAppController.Message("test", "test", Instant.MIN);
+		Message message = new Message(0L, "test", "test", "test", Instant.MIN);
 		String expected = mapper.writeValueAsString(List.of(message));
 
 		when(service.getChats()).thenReturn(List.of(message));

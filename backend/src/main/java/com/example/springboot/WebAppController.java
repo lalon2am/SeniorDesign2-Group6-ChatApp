@@ -13,45 +13,6 @@ import java.util.List;
 
 @RestController
 public class WebAppController {
-
-    // Create a nested class to represent the message structure
-    public static class Message {
-        private String text;
-        private String user;
-        private Instant timestamp;
-
-        public Message(String text, String user, Instant timestamp) {
-            this.text = text;
-            this.user = user;
-            this.timestamp = timestamp;
-        }
-
-        // Getters and Setters
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getUser() {
-            return user;
-        }
-
-        public void setUser(String user) {
-            this.user = user;
-        }
-
-        public Instant getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(Instant timestamp) {
-            this.timestamp = timestamp;
-        }
-    }
-
     @Autowired
     private WebAppService service;
 
@@ -66,7 +27,7 @@ public class WebAppController {
 //            Message message = objectMapper.readValue(jsonMessage, Message.class);
 
             // Display the formatted output
-            System.out.println("Formatted output: " + message.getUser() + ": " + message.getText() + " " + message.getTimestamp());
+            System.out.println("Formatted output: " + message.getSender() + ": " + message.getMessage() + " " + message.getSentAt());
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             System.err.println("Error parsing JSON: " + e.getMessage());

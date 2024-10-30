@@ -6,7 +6,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table(name = "messages")
@@ -26,7 +29,15 @@ public class Message {
     private String message;
 
     @Column(name = "sent_at", nullable = false)
-    private Timestamp sentAt;
+    private Instant sentAt;
+
+    public Message(Long id, String sender, String recipient, String message, Instant sentAt) {
+        this.id = id;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.message = message;
+        this.sentAt = sentAt;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -40,6 +51,6 @@ public class Message {
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
 
-    public Timestamp getSentAt() { return sentAt; }
-    public void setSentAt(Timestamp sentAt) { this.sentAt = sentAt; }
+    public Instant getSentAt() { return sentAt; }
+    public void setSentAt(Instant sentAt) { this.sentAt = sentAt; }
 }
