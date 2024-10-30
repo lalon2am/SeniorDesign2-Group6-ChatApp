@@ -19,6 +19,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
 	// implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	// implementation 'org.springframework.boot:spring-boot-starter-security' Commented out currently for sake of testing
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -28,6 +30,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	runtimeOnly('org.postgresql:postgresql')
 }
 
 tasks.named('test') {
