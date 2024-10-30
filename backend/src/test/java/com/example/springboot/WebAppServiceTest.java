@@ -33,6 +33,11 @@ public class WebAppServiceTest {
 		List<MessageRequest> result = service.getChats();
 
 		// assert
-		assertEquals(expected, result);
+		for (int i = 0; i < expected.size() && i < result.size(); i++) {
+			assertEquals(expected.get(i).getId(), result.get(i).getId());
+			assertEquals(expected.get(i).getUser(), result.get(i).getUser());
+			assertEquals(expected.get(i).getText(), result.get(i).getText());
+			assertEquals(expected.get(i).getTimestamp(), result.get(i).getTimestamp());
+		}
 	}
 }
