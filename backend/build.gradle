@@ -30,6 +30,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	runtimeOnly('org.postgresql:postgresql')
 }
 
 tasks.named('test') {

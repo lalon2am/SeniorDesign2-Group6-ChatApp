@@ -29,6 +29,7 @@ public class MessageEntity {
     @Column(name = "sent_at", nullable = false)
     private Instant sentAt;
 
+    public MessageEntity() {}
     public MessageEntity(Long id, String sender, String recipient, String message, Instant sentAt) {
         this.id = id;
         this.sender = sender;
