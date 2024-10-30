@@ -7,13 +7,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
 @Table(name = "messages")
-public class Message {
+public class MessageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +29,7 @@ public class Message {
     @Column(name = "sent_at", nullable = false)
     private Instant sentAt;
 
-    public Message(Long id, String sender, String recipient, String message, Instant sentAt) {
+    public MessageEntity(Long id, String sender, String recipient, String message, Instant sentAt) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
