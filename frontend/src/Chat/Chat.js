@@ -8,7 +8,7 @@ function Chat({ isOpen }) {
 
   const loadMessages = async () => {
     try {
-      const response = await fetch('http://localhost:8080/', {
+      const response = await fetch('https://cps410chatappbackenddev.onrender.com/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
