@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -23,12 +24,13 @@ public class WebAppServiceTest {
 	@Test
 	public void getChats() throws Exception {
 		// arrange
-		List<MessageEntity> expected = List.of(new MessageEntity(0L, "test", "test", "test", Instant.MIN));
+		MessageEntity message = new MessageEntity(0L, "test", "test", "test", Instant.now());
+		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getMessage(), Date.from(message.getSentAt())));
 
-		when(repository.findAll()).thenReturn(expected);
+		when(repository.findAll()).thenReturn(List.of(message));
 
 		// act
-		List<MessageEntity> result = service.getChats();
+		List<MessageRequest> result = service.getChats();
 
 		// assert
 		assertEquals(expected, result);

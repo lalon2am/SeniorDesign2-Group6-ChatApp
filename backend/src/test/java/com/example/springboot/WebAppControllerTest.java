@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -46,10 +47,10 @@ public class WebAppControllerTest {
 		mapper.registerModule(module);
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-		MessageEntity messageEntity = new MessageEntity(0L, "test", "test", "test", Instant.MIN);
-		String expected = mapper.writeValueAsString(List.of(messageEntity));
+		MessageRequest message = new MessageRequest(0L, "test", "test", Date.from(Instant.now()));
+		String expected = mapper.writeValueAsString(List.of(message));
 
-		when(service.getChats()).thenReturn(List.of(messageEntity));
+		when(service.getChats()).thenReturn(List.of(message));
 
 		// act
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))

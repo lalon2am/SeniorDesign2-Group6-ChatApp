@@ -34,8 +34,8 @@ public class WebAppController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<MessageEntity>> getMessages() {
-        List<MessageEntity> messageEntity = service.getChats();
+    public ResponseEntity<List<MessageRequest>> getMessages() {
+        List<MessageRequest> messageEntity = service.getChats();
         if (messageEntity.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(messageEntity);

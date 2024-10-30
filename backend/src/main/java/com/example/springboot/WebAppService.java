@@ -10,7 +10,8 @@ public class WebAppService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public List<MessageEntity> getChats() {
-        return messageRepository.findAll();
+    public List<MessageRequest> getChats() {
+        return null;
+//        return messageRepository.findAll();
     }
 }
