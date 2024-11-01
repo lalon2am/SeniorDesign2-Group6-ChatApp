@@ -10,7 +10,7 @@ function Friends() {
   function addFriend(){
     //do friend bs...
     try{
-        const response = fetch('http://localhost:8080/addfriend', {
+        const response = global.fetch('http://localhost:8080/addfriend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
