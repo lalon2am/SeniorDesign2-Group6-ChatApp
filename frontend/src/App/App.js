@@ -3,6 +3,7 @@ import Session from '../Session/Session'
 import Chat from '../Chat/Chat'
 import Send from '../Send/Send'
 import Auth from '../Auth/Auth'
+import Friends from '../Friends/Friends';
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 
@@ -43,6 +44,7 @@ function App() {
 
       <Auth isOpen={isAuthOpen} closeAuth={closeAuth} />
       <Session isOpen={isAppOpen} />
+      <Friends isOpen={isAppOpen} />
       <div className="textbox">
         <Chat isOpen={isAppOpen} />
         <Send isOpen={isAppOpen} />

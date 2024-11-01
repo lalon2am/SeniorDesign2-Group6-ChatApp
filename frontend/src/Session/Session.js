@@ -4,7 +4,6 @@ import { getAuth, signOut } from 'firebase/auth'; // Adjust the path as needed
 import { doc, getDoc } from 'firebase/firestore';
 import './Session.css';
 import Auth from '../Auth/Auth';
-
 function Session({ isOpen, onLogout, setAuthOpen }) {
   const [username, setUsername] = useState(''); // Replace with actual username logic
   
