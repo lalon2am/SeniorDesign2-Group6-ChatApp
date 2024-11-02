@@ -41,6 +41,11 @@ public class WebAppController {
         return ResponseEntity.ok(messageEntity);
     }
 
+	@PostMapping("/addfriend")
+    public String addfriend(@RequestBody String username) {
+        
+		return "No friend found";
+	}
 //    @GetMapping("/")
 //    public String index() {
 //        return "Greetings from Spring Boot!";
