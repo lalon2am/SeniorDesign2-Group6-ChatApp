@@ -88,7 +88,7 @@ function Auth({ isOpen, closeAuth }) {
   if (!isOpen) return null;
 
   return (
-    <div className="container">
+    <div className="container acontainer">
       {/* Left Side: General Welcome Message */}
       <div className="left-side">
         <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speech%20Balloon.png" alt="Speech Balloon" width="50" height="50" />

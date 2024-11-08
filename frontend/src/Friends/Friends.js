@@ -1,6 +1,6 @@
 import './Friends.css';
 import React, { useEffect, useState } from 'react';
-function Friends() {
+function Friends({ isOpen }) {
   const [friendresult, setfriendresult] = useState('');
   const [inputValue, setInputValue] = useState('');
   const handleInputChange = (event) => {
@@ -44,9 +44,11 @@ function Friends() {
       setfriendresult("Connection Failed");
     };
   }
-
+  if (!isOpen){
+    return null;
+  }
   return (
-    <div className="Friends">
+    <div className="Friends sidebar">
       <header className="Friends-header">
         <div className="input-container">
           <span>Add friends:</span>
