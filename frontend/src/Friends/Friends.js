@@ -10,7 +10,7 @@ function Friends({ isOpen }) {
   function addFriend() {
     //do friend bs...
     try {
-      const response = global.fetch('https://cps410chatappbackenddev.onrender.com/addfriend', {
+      const response = global.fetch(process.env.REACT_APP_API_URL + '/addfriend', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
