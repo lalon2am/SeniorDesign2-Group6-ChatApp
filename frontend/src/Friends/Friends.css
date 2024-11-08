@@ -77,3 +77,15 @@ button:hover {
 .Friends-link {
   color: #61dafb;
 }
+
+.Friends {
+  width: 250px; /* Width of the sidebar */
+  background-color: #333; /* Sidebar background color */
+  color: white; /* Text color in the sidebar */
+  padding: 15px; /* Padding inside the sidebar */
+}
+.main-content {
+  flex: 1; /* Take the remaining space */
+  padding: 15px; /* Padding inside the main content */
+  background-color: #f4f4f4; /* Main content background color */
+}

@@ -36,19 +36,32 @@ function App() {
     setAuthOpen(false);
     setAppOpen(true);
   };
+if(isAuthOpen){
+  return(
+  <div className="App" data-testid="app-container">
+  <header className="App-header">
+  </header>
+  <Auth isOpen={isAuthOpen} closeAuth={closeAuth} />
+</div>
+)
 
+}
   return (
     <div className="App" data-testid="app-container">
       <header className="App-header">
       </header>
-
-      <Auth isOpen={isAuthOpen} closeAuth={closeAuth} />
-      <Session isOpen={isAppOpen} />
       <Friends isOpen={isAppOpen} />
+      
+      <div className='mainscreen'>
+      <Session isOpen={isAppOpen} />
+      
       <div className="textbox">
         <Chat isOpen={isAppOpen} />
         <Send isOpen={isAppOpen} />
       </div>
+      </div>
+
+
     </div>
   );
 }

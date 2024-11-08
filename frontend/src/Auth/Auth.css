@@ -97,3 +97,6 @@ button:focus {
     border-right: none;
   }
 }
+.acontainer {
+  width: 100%;
+}
