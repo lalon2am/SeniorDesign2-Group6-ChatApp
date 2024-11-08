@@ -1,11 +1,9 @@
 package com.example.springboot;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,12 +40,30 @@ public class WebAppController {
     }
 
 	@PostMapping("/addfriend")
-    public String addfriend(@RequestBody String username) {
-        
-		return "No friend found";
+    public ResponseEntity<String> addfriend(@RequestBody FriendRequest friend) {
+
+        // verify friend user exists and current exists
+        // updates friends table with link between users
+		return ResponseEntity.ok("No friend found");
 	}
-//    @GetMapping("/")
-//    public String index() {
-//        return "Greetings from Spring Boot!";
-//    }
+
+    @GetMapping("/getfriend")
+    public ResponseEntity<List<FriendRequest>> getFriends(@RequestParam("userId") String currentUser) {
+        // verify current user exists
+        // retrieve list of friend ids
+        // retireve friend info from user table
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserRequest user) {
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UserRequest> login(@RequestBody UserRequest user) {
+        return ResponseEntity.internalServerError().build();
+    }
+    // login
+
 }
