@@ -8,7 +8,7 @@ function Chat({ isOpen }) {
 
   const loadMessages = async () => {
     try {
-      const response = await fetch('https://cps410chatappbackenddev.onrender.com/', {
+      const response = await fetch(process.env.REACT_APP_API_URL + '/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
