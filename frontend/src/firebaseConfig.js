@@ -4,7 +4,7 @@ const serviceAccount = require('./path/to/serviceAccountKey.json'); // Replace w
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://<YOUR-PROJECT-ID>.firebaseio.com", // Replace with your project ID
+  databaseURL: "https://chatmessaging-app-f9d62.firebaseio.com", // Replace with your project ID
 });
 
 const firestore = admin.firestore();

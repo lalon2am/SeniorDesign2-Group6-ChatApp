@@ -1,8 +1,6 @@
 import './Auth.css';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import Signup from '../Signup/Signup';
-import { saveUserToFirestore } from '../firestoreService';
 function Auth({ isOpen, closeAuth }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -10,7 +8,6 @@ function Auth({ isOpen, closeAuth }) {
   const [name, setName] = useState('');
   const [user, setUser] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const auth = getAuth(); // Get the Firebase Auth instance
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,11 +35,26 @@ function Auth({ isOpen, closeAuth }) {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const response = global.fetch(process.env.REACT_APP_API_URL + '/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email:email, password:password, username:name })
+      },
+      ).then(function (r) {
+        if(r.ok){
+          localStorage.setItem('userId', r.json.userId);
       alert('Sign up successful!');
       closeModal();
-      // Optionally save user to Firestore
-      await saveUserToFirestore({ name, email });
+        }else{
+          alert('Sign up unsuccessful! nothing was returned');
+
+        }
+      })
+
+
+      
     } catch (error) {
       alert(`Sign-Up Error: ${error.message}`);
     }
@@ -55,10 +67,27 @@ function Auth({ isOpen, closeAuth }) {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user); // Store user information
-      alert('Login successful!');
-      closeAuth(); // Close the authentication modal
+
+const response = global.fetch(process.env.REACT_APP_API_URL + '/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ email:email, password:password })
+}
+).then(function (r) {
+  if(r.ok){
+    localStorage.setItem('userId', r.json.userId);
+alert('Sign in successful!');
+closeModal();
+  }else{
+    alert('Sign up unsuccessful! nothing was returned');
+    alert('Login successful!');
+    closeAuth(); // Close the authentication modal
+  }
+})
+
+      
     } catch (error) {
       alert('Login failed, please try again');
     }
@@ -66,24 +95,13 @@ function Auth({ isOpen, closeAuth }) {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      setUser(null); // Clear user information
+      localStorage.removeItem('userId');
       alert('Logout successful!');
-      // Redirect logic can be added here if needed
-      // For example, if you're using React Router:
-      // history.push('/auth'); // Adjust the path as needed
     } catch (error) {
       alert('Logout failed, please try again');
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(currentUser => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe(); // Clean up subscription
-  }, [auth]);
 
   if (!isOpen) return null;
 
