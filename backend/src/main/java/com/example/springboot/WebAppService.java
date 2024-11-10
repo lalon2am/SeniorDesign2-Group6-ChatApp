@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WebAppService {
@@ -41,8 +42,13 @@ public class WebAppService {
     }
 
     public UserRequest login(UserRequest userRequest) {
-        // get user with email and password
-        // return entity w/ info
+        Optional<UserEntity> optionalUser = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
+        if (optionalUser.isPresent()) {
+            UserEntity user = optionalUser.get();
+            userRequest.setId(user.getUserId().toString());
+            userRequest.setUsername(user.getUsername());
+            return userRequest;
+        }
         return null;
     }
 }
