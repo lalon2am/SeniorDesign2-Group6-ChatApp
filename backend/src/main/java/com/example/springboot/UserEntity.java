@@ -10,6 +10,11 @@ import java.util.UUID;
 public class UserEntity {
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     private UUID userId;
 
     private String username;
@@ -17,4 +22,20 @@ public class UserEntity {
     private String password;
 
     private String email;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

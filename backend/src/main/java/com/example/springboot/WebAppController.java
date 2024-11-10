@@ -56,14 +56,18 @@ public class WebAppController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRequest user) {
+    public ResponseEntity<UserRequest> registerUser(@RequestBody UserRequest user) {
+        UserRequest userResponse = service.register(user);
+        if (userResponse != null)
+            return ResponseEntity.ok(userResponse);
         return ResponseEntity.internalServerError().build();
     }
 
     @GetMapping("/login")
     public ResponseEntity<UserRequest> login(@RequestBody UserRequest user) {
+        UserRequest userResponse = service.login(user);
+        if (userResponse != null)
+            return ResponseEntity.ok(userResponse);
         return ResponseEntity.internalServerError().build();
     }
-    // login
-
 }
