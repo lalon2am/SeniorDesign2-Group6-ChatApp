@@ -47,7 +47,7 @@ public class WebAppControllerTest {
 		mapper.registerModule(module);
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-		MessageRequest message = new MessageRequest(0L, "test", "test", Date.from(Instant.now()));
+		MessageRequest message = new MessageRequest(0L, "test", "test", "test", Date.from(Instant.now()));
 		String expected = mapper.writeValueAsString(List.of(message));
 
 		when(service.getChats()).thenReturn(List.of(message));

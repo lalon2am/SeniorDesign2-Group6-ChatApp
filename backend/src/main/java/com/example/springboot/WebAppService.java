@@ -21,12 +21,22 @@ public class WebAppService {
     @Autowired
     private UserRepository userRepository;
 
+    public MessageRequest addChat(MessageRequest messageRequest) {
+        MessageEntity messageEntity = new MessageEntity();
+        messageEntity.setMessage(messageRequest.getText());
+        messageEntity.setSender(messageRequest.getUser());
+        messageEntity.setRecipient(messageRequest.getRecipient());
+        messageEntity.setSentAt(messageRequest.getTimestamp().toInstant());
+        messageEntity = messageRepository.save(messageEntity);
+        return new MessageRequest(messageEntity.getId(), messageEntity.getSender(), messageEntity.getRecipient(), messageEntity.getMessage(), Date.from(messageEntity.getSentAt()));
+    }
+
     public List<MessageRequest> getChats() {
         return messageRepository
                 .findAll()
                 .stream()
                 .map(message ->
-                        new MessageRequest(message.getId(), message.getSender(), message.getMessage(), Date.from(message.getSentAt())))
+                        new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())))
                 .toList();
     }
 

@@ -25,7 +25,7 @@ public class WebAppServiceTest {
 	public void getChats() throws Exception {
 		// arrange
 		MessageEntity message = new MessageEntity(0L, "test", "test", "test", Instant.now());
-		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getMessage(), Date.from(message.getSentAt())));
+		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())));
 
 		when(repository.findAll()).thenReturn(List.of(message));
 

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -13,22 +15,11 @@ public class WebAppController {
     private WebAppService service;
 
     @PostMapping("/")
-    public ResponseEntity<String> addMessage(@RequestBody MessageEntity messageEntity) {
-        // Display the raw JSON input
-        //System.out.println("Received raw JSON message: " + jsonMessage);
-
-        try {
-            // Use ObjectMapper to convert the JSON string to a Message object
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            Message message = objectMapper.readValue(jsonMessage, Message.class);
-
-            // Display the formatted output
-            System.out.println("Formatted output: " + messageEntity.getSender() + ": " + messageEntity.getMessage() + " " + messageEntity.getSentAt());
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            System.err.println("Error parsing JSON: " + e.getMessage());
-            return ResponseEntity.internalServerError().build();
-        }
+    public ResponseEntity<MessageRequest> addMessage(@RequestBody MessageRequest messageRequest) {
+        MessageRequest message = service.addChat(messageRequest);
+        if (message != null)
+            return ResponseEntity.ok(message);
+        return ResponseEntity.internalServerError().build();
     }
 
     @GetMapping("/")
