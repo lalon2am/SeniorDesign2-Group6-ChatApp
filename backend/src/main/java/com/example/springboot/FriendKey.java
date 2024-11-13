@@ -4,13 +4,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.IdClass;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class FriendKey implements Serializable {
-    private String userId;
+    private UUID userId;
 
-    private String friendId;
+    private UUID friendId;
 
-    public FriendKey(String userId, String friendId) {
+    public FriendKey() {
+
+    }
+    public FriendKey(UUID userId, UUID friendId) {
         this.userId = userId;
         this.friendId = friendId;
     }

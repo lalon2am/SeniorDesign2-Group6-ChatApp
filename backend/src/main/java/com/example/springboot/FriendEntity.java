@@ -15,4 +15,21 @@ public class FriendEntity {
     @Id
     @Column(name = "friend_id")
     private UUID friendId;
+
+    public FriendEntity(UUID userId, UUID friendId) {
+        this.userId = userId;
+        this.friendId = friendId;
+    }
+
+    public FriendEntity() {
+
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public UUID getFriendId() {
+        return friendId;
+    }
 }

@@ -1,12 +1,14 @@
 package com.example.springboot;
 
 import jakarta.transaction.Transactional;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class WebAppService {
@@ -51,4 +53,28 @@ public class WebAppService {
         }
         return null;
     }
+
+    public FriendRequest addFriend(FriendRequest friend) {
+        Optional<UserEntity> currentUser = userRepository.findById(UUID.fromString(friend.getUserId()));
+        Optional<UserEntity> friendUser = userRepository.findById(UUID.fromString(friend.getFriendId()));
+        if (currentUser.isPresent() && friendUser.isPresent()) {
+            FriendEntity entity = new FriendEntity(UUID.fromString(friend.getUserId()), UUID.fromString(friend.getFriendId()));
+            entity = friendRepository.save(entity);
+            return new FriendRequest(entity.getUserId().toString(), entity.getFriendId().toString(), friend.getFriendEmail());
+        }
+        return null;
+    }
+
+    public List<FriendRequest> getFriends(String currentUser) {
+        List<FriendEntity> friendEntities = friendRepository.findByUserId(UUID.fromString(currentUser));
+        if (friendEntities.isEmpty()) {
+            return List.of();
+        }
+        return friendEntities.stream()
+                .map(friendEntity -> new FriendRequest(friendEntity.getUserId().toString(), friendEntity.getFriendId().toString(), ""))
+                .toList();
+    }
+
+//    public void deleteFriend(String friendId) {
+//    }
 }

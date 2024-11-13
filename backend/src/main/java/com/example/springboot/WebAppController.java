@@ -39,22 +39,31 @@ public class WebAppController {
         return ResponseEntity.ok(messageEntity);
     }
 
-	@PostMapping("/addfriend")
-    public ResponseEntity<String> addfriend(@RequestBody FriendRequest friend) {
-
-        // verify friend user exists and current exists
-        // updates friends table with link between users
-		return ResponseEntity.ok("No friend found");
+	@PostMapping("/addFriend")
+    public ResponseEntity<FriendRequest> addfriend(@RequestBody FriendRequest friend) {
+        FriendRequest savedFriend = service.addFriend(friend);
+        if (savedFriend != null)
+		    return ResponseEntity.ok(savedFriend);
+        return ResponseEntity.internalServerError().build();
 	}
 
-    @GetMapping("/getfriend")
+    @GetMapping("/getFriends")
     public ResponseEntity<List<FriendRequest>> getFriends(@RequestParam("userId") String currentUser) {
-        // verify current user exists
-        // retrieve list of friend ids
-        // retireve friend info from user table
-        return ResponseEntity.internalServerError().build();
+        List<FriendRequest> friends = service.getFriends(currentUser);
+        if (friends == null)
+            return ResponseEntity.internalServerError().build();
+        if (friends.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(friends);
     }
 
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<FriendRequest> deleteFriend(@PathVariable String id) {
+//        FriendRequest deletedFriend = service.deleteFriend(id);
+//        if (deletedFriend != null)
+//            return ResponseEntity.ok(deletedFriend);
+//        return ResponseEntity.internalServerError().build();
+//    }
     @PostMapping("/register")
     public ResponseEntity<UserRequest> registerUser(@RequestBody UserRequest user) {
         UserRequest userResponse = service.register(user);
