@@ -43,8 +43,10 @@ public class WebAppController {
         List<FriendRequest> friends = service.getFriends(currentUser);
         if (friends == null)
             return ResponseEntity.internalServerError().build();
+
         if (friends.isEmpty())
             return ResponseEntity.noContent().build();
+
         return ResponseEntity.ok(friends);
     }
 
@@ -63,7 +65,7 @@ public class WebAppController {
         return ResponseEntity.internalServerError().build();
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserRequest> login(@RequestBody UserRequest user) {
         UserRequest userResponse = service.login(user);
         if (userResponse != null)

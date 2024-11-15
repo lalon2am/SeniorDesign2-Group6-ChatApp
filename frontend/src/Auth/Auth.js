@@ -17,7 +17,7 @@ function Auth({ isOpen, closeAuth }) {
     setIsModalOpen(false);
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (name,email,password) => {
     if (!name || !email || !password) {
       alert('All fields are required');
       return;
@@ -44,6 +44,7 @@ function Auth({ isOpen, closeAuth }) {
       },
       ).then(function (r) {
         if(r.ok){
+          console.log(r)
           localStorage.setItem('userId', r.json.userId);
       alert('Sign up successful!');
       closeModal();
@@ -73,18 +74,22 @@ const response = global.fetch(process.env.REACT_APP_API_URL + '/login', {
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify({ email:email, password:password })
+  body: JSON.stringify({id:"", username:"", email:email, password:password })
 }
 ).then(function (r) {
   if(r.ok){
-    localStorage.setItem('userId', r.json.userId);
-alert('Sign in successful!');
-closeModal();
+    return r.json();
+  
   }else{
+    console.log(r);
     alert('Sign up unsuccessful! nothing was returned');
-    alert('Login successful!');
-    closeAuth(); // Close the authentication modal
+    
   }
+}).then(function(responsejson){
+    localStorage.setItem('userId', responsejson.id);
+alert('Sign in successful!');
+closeAuth(); // Close the authentication modal
+closeModal();
 })
 
       
