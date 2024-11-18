@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 public class WebAppServiceTest {
@@ -24,13 +25,14 @@ public class WebAppServiceTest {
 	@Test
 	public void getChats() throws Exception {
 		// arrange
+		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
 		MessageEntity message = new MessageEntity(0L, "test", "test", "test", Instant.now());
 		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())));
 
-		when(repository.findAll()).thenReturn(List.of(message));
+		when(repository.findBySenderAndRecipient(UUID.fromString(request.getUserId()), UUID.fromString(request.getFriendId()))).thenReturn(List.of(message));
 
 		// act
-		List<MessageRequest> result = service.getChats();
+		List<MessageRequest> result = service.getChats(request);
 
 		// assert
 		for (int i = 0; i < expected.size() && i < result.size(); i++) {

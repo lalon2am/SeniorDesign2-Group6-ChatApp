@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,13 +50,19 @@ public class WebAppControllerTest {
 		mapper.registerModule(module);
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
+		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
+		String requestBody = mapper.writeValueAsString(request);
+
 		MessageRequest message = new MessageRequest(0L, "test", "test", "test", Date.from(Instant.now()));
 		String expected = mapper.writeValueAsString(List.of(message));
 
-		when(service.getChats()).thenReturn(List.of(message));
+		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of(message));
 
 		// act
-		MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/getMessages")
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON)
+						.content(requestBody))
 				.andExpect(status().isOk()).andReturn();
 		String responseString = result.getResponse().getContentAsString();
 
@@ -64,10 +73,16 @@ public class WebAppControllerTest {
 	@Test
 	public void emptyChatsReturnsNoContent() throws Exception {
 		// arrange
-		when(service.getChats()).thenReturn(List.of());
+		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
+		ObjectMapper mapper = new ObjectMapper();
+		String requestBody = mapper.writeValueAsString(request);
+		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of());
 
 		// act
-		MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/getMessages")
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON)
+						.content(requestBody))
 				.andExpect(status().isNoContent()).andReturn();
 		String responseString = result.getResponse().getContentAsString();
 

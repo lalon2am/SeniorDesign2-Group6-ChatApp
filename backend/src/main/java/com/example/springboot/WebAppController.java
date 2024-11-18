@@ -14,7 +14,7 @@ public class WebAppController {
     @Autowired
     private WebAppService service;
 
-    @PostMapping("/")
+    @PostMapping("/addMessage")
     public ResponseEntity<MessageRequest> addMessage(@RequestBody MessageRequest messageRequest) {
         MessageRequest message = service.addChat(messageRequest);
         if (message != null)
@@ -22,9 +22,9 @@ public class WebAppController {
         return ResponseEntity.internalServerError().build();
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<MessageRequest>> getMessages() {
-        List<MessageRequest> messageEntity = service.getChats();
+    @PostMapping("/getMessages")
+    public ResponseEntity<List<MessageRequest>> getMessages(@RequestBody FriendRequest friend) {
+        List<MessageRequest> messageEntity = service.getChats(friend);
         if (messageEntity.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(messageEntity);

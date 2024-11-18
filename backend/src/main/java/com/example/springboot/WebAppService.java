@@ -31,9 +31,9 @@ public class WebAppService {
         return new MessageRequest(messageEntity.getId(), messageEntity.getSender(), messageEntity.getRecipient(), messageEntity.getMessage(), Date.from(messageEntity.getSentAt()));
     }
 
-    public List<MessageRequest> getChats() {
+    public List<MessageRequest> getChats(FriendRequest friend) {
         return messageRepository
-                .findAll()
+                .findBySenderAndRecipient(UUID.fromString(friend.getUserId()), UUID.fromString(friend.getFriendId()))
                 .stream()
                 .map(message ->
                         new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())))
