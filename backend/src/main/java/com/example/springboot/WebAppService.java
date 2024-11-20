@@ -68,7 +68,7 @@ public class WebAppService {
         Optional<UserEntity> currentUser = userRepository.findById(UUID.fromString(friend.getUserId()));
         Optional<UserEntity> friendUser = userRepository.findByEmail(friend.getFriendEmail());
         if (currentUser.isPresent() && friendUser.isPresent()) {
-            FriendEntity entity = new FriendEntity(UUID.fromString(friend.getUserId()), UUID.fromString(friend.getFriendId()));
+            FriendEntity entity = new FriendEntity(currentUser.get().getUserId(), friendUser.get().getUserId());
             entity = friendRepository.save(entity);
             return new FriendRequest(entity.getUserId().toString(), entity.getFriendId().toString(), friend.getFriendEmail());
         }
