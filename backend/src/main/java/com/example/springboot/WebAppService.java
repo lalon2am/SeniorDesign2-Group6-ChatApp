@@ -33,7 +33,7 @@ public class WebAppService {
 
     public List<MessageRequest> getChats(FriendRequest friend) {
         return messageRepository
-                .findBySenderAndRecipient(UUID.fromString(friend.getUserId()), UUID.fromString(friend.getFriendId()))
+                .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
                 .stream()
                 .map(message ->
                         new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())))

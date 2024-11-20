@@ -10,5 +10,5 @@ import java.util.UUID;
 
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     @Query("select m from MessageEntity m where m.sender = :sender and m.recipient = :recipient")
-    List<MessageEntity> findBySenderAndRecipient(@Param("sender") UUID sender, @Param("recipient") UUID recipient);
+    List<MessageEntity> findBySenderAndRecipient(@Param("sender") String sender, @Param("recipient") String recipient);
 }

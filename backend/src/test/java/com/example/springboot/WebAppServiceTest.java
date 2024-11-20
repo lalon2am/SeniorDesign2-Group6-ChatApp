@@ -29,7 +29,7 @@ public class WebAppServiceTest {
 		MessageEntity message = new MessageEntity(0L, "test", "test", "test", Instant.now());
 		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())));
 
-		when(repository.findBySenderAndRecipient(UUID.fromString(request.getUserId()), UUID.fromString(request.getFriendId()))).thenReturn(List.of(message));
+		when(repository.findBySenderAndRecipient(request.getUserId(), request.getFriendId())).thenReturn(List.of(message));
 
 		// act
 		List<MessageRequest> result = service.getChats(request);
