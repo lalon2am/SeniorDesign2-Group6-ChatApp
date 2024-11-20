@@ -2,7 +2,7 @@ import './Chat.css';
 import Message from '../Message/Message';
 import React, { useEffect, useState } from 'react';
 
-function Chat({ isOpen }) {
+function Chat({ isOpen , friend}) {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(false);
 
@@ -58,6 +58,7 @@ function Chat({ isOpen }) {
   );
 
   return (<div>
+    {JSON.stringify(friend)}
     <h2>Messages</h2>
     <div>
       {messages.map((message) => {

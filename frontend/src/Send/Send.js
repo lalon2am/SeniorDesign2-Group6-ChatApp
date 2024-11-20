@@ -1,7 +1,7 @@
 import './Send.css';
 import React, { useEffect, useState } from 'react';
 
-function Send({ isOpen, onSendMessage }) {
+function Send({ isOpen, onSendMessage, friend }) {
   const [message, setMessage] = useState('');
   const styles = {
     container: {
@@ -59,7 +59,7 @@ function Send({ isOpen, onSendMessage }) {
 
   return (
     <div className="Send">
-
+{JSON.stringify(friend)}
       <div className="Send-input">
         <input
           type="text"

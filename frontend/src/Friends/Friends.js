@@ -1,6 +1,6 @@
 import './Friends.css';
 import React, { useEffect, useState } from 'react';
-function Friends({ isOpen }) {
+function Friends({ isOpen, selectFriend }) {
 
 
   const [userId, setUserId] = useState('');
@@ -61,7 +61,7 @@ function Friends({ isOpen }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userId:localStorage.getItem("userId"),friendId:inputValue})
+        body: JSON.stringify({userId:localStorage.getItem("userId"),friendEmail:inputValue, friendId:""})
       },
       ).then(function (r) {
         if (r.ok) {
@@ -85,7 +85,7 @@ function Friends({ isOpen }) {
   return (
 <div className="Friends sidebar">
   <header className="Friends-header">
-    <p className='friendid'>(Your friend id is {userId})</p>
+    <p className='friendid'>Your email is {localStorage.getItem("email")})</p>
     <div className="input-container">
       <span>Add friends:</span>
       <input
@@ -103,7 +103,7 @@ function Friends({ isOpen }) {
     
     <ul>
     {friends.map((item, index) => (
-          <li key={index}>{item.friendId}</li> 
+          <li onClick={() => selectFriend(item)} className="friendSelect" key={index}>{item.friendId}</li>
         ))}
     </ul>
   </div>

@@ -44,14 +44,18 @@ function Auth({ isOpen, closeAuth }) {
       },
       ).then(function (r) {
         if(r.ok){
-          console.log(r)
-          localStorage.setItem('userId', r.json.userId);
-      alert('Sign up successful!');
-      closeModal();
+          return r.json();
+
         }else{
           alert('Sign up unsuccessful! nothing was returned');
 
         }
+      }).then(function(responsejson){
+        localStorage.setItem('userId', responsejson.id);
+        localStorage.setItem('username', responsejson.username);
+        localStorage.setItem('email', responsejson.email);
+        alert('Sign up successful!');
+      closeModal();
       })
 
 
@@ -87,6 +91,8 @@ const response = global.fetch(process.env.REACT_APP_API_URL + '/login', {
   }
 }).then(function(responsejson){
     localStorage.setItem('userId', responsejson.id);
+    localStorage.setItem('username', responsejson.username);
+    localStorage.setItem('email', responsejson.email);
 alert('Sign in successful!');
 closeAuth(); // Close the authentication modal
 closeModal();
