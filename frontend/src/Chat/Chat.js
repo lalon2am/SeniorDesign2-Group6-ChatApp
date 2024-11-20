@@ -6,30 +6,29 @@ function Chat({ isOpen , friend}) {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(false);
 
-  const loadMessages = async () => {
-    try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
 
-      if (response.ok) {
-        const json = await response.json();
-        // set id's for messages received
-        for (let i = 0; i < json.length; i++) {
-          json[i].id = i;
-        }
-        setMessages(json);
-      } else {
-        console.error('Failed to load messages:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-      setError(true);
+
+function loadMessages(){
+  const response = global.fetch(process.env.REACT_APP_API_URL + '/getMessages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(friend)
+  },
+  ).then(function (r) {
+    if (r.ok) {
+      //stuff
+
+      return r.json()
+    } else {
+
     }
-  }
+
+  }).then(function (result) {
+    setMessages(result);
+  })
+}
 
   useEffect(() => {
     if (isOpen) {
@@ -60,6 +59,7 @@ function Chat({ isOpen , friend}) {
   return (<div>
     {JSON.stringify(friend)}
     <h2>Messages</h2>
+    {messages}
     <div>
       {messages.map((message) => {
         const date = new Date(message.timestamp);
