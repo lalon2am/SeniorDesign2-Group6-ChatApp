@@ -69,14 +69,14 @@ function Friends({ isOpen, selectFriend }) {
 
           return r.json()
         } else {
-          setfriendresult("Connection Failed");
+          
         }
 
       }).then(function (result) {
         //add alert of friend? you will see them pop up anyways so maybe unnecessary
       })
     } catch (e) {
-      setfriendresult("Connection Failed");
+      
     };
   }
   if (!isOpen){

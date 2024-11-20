@@ -1,7 +1,8 @@
+import { Timestamp } from 'firebase/firestore';
 import './Send.css';
 import React, { useEffect, useState } from 'react';
 
-function Send({ isOpen, onSendMessage, friend }) {
+function Send({ isOpen, loadMessages, friend }) {
   const [message, setMessage] = useState('');
   const styles = {
     container: {
@@ -28,7 +29,7 @@ function Send({ isOpen, onSendMessage, friend }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({text:message, user:friend.userId, recipient:friend.friendId})
+      body: JSON.stringify({text:message, user:friend.userId, recipient:friend.friendId, timestamp:Date.now()}),
     },
     ).then(function (r) {
       if (r.ok) {
@@ -36,10 +37,13 @@ function Send({ isOpen, onSendMessage, friend }) {
   
         return r.json()
       } else {
-        setfriendresult("Connection Failed");
+        
       }
   
     }).then(function (result) {
+      if(result){
+        loadMessages({friendId:result.recipient,userId:localStorage.getItem("userId")});
+      }
     })
 
     //do stuff here!

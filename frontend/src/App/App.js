@@ -17,6 +17,7 @@ function App() {
   const [isAppOpen, setAppOpen] = useState(false);
   const [isChatOpen, setChatOpen] = useState(false);
   const [chatFriend, setChatFriend] = useState({});
+  const [messages, setMessages] = useState([]);
   // Get the saved login status 
   useEffect(() => {
     const auth = getAuth();
@@ -42,6 +43,50 @@ function App() {
     setAuthOpen(false);
     setAppOpen(true);
   };
+
+
+
+
+  function loadMessages(friend){
+    try{
+    const response = global.fetch(process.env.REACT_APP_API_URL + '/getMessages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(friend)
+    },
+    ).then(function (r) { {
+      
+    }
+      if (r.ok) {
+        //stuff
+        const contentType = r.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+        return r.json()
+        }
+      } else {
+  
+      }
+  
+    }).then(function (result) {
+      if(result){
+      setMessages(result);
+      }
+    })
+  }catch(e){
+
+  }
+  }
+
+
+
+
+
+
+
+
+
 if(isAuthOpen){
   return(
   <div className="App" data-testid="app-container">
@@ -59,8 +104,8 @@ if(isAuthOpen){
       <Friends isOpen={isAppOpen} selectFriend={selectFriend}/>
       
       <div className='mainscreen'>
-      <Chat isOpen={isChatOpen} friend={chatFriend}/>
-      <Send isOpen={isChatOpen} friend={chatFriend}/>
+      <Chat isOpen={isChatOpen} friend={chatFriend} loadMessages={loadMessages} messages={messages} />
+      <Send isOpen={isChatOpen} friend={chatFriend} loadMessages={loadMessages}/>
 
       </div>
 
