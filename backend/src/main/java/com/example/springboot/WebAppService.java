@@ -34,15 +34,26 @@ public class WebAppService {
         List<MessageRequest> sentMessages = messageRepository
                 .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
                 .stream()
-                .map(message ->
-                        new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())))
+                .map(message -> {
+                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        String email = "<Unknown>";
+                        if (user.isPresent()) {
+                            email = user.get().getEmail();
+                        }
+                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()));
+                })
                 .toList();
         List<MessageRequest> recievedMessages = messageRepository
                 .findBySenderAndRecipient(friend.getFriendId(), friend.getUserId())
                 .stream()
-                .map(message ->
-                        new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()))
-                )
+                .map(message -> {
+                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        String email = "<Unknown>";
+                        if (user.isPresent()) {
+                            email = user.get().getEmail();
+                        }
+                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt());
+                })
                 .toList();
         List<MessageRequest> allMessages = new ArrayList<>(sentMessages);
         allMessages.addAll(recievedMessages);
