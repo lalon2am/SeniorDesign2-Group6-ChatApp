@@ -12,6 +12,11 @@ function App() {
     
     setChatFriend(friend);
     setChatOpen(true);
+
+
+
+
+    
   }
   const [isAuthOpen, setAuthOpen] = useState(true);
   const [isAppOpen, setAppOpen] = useState(false);

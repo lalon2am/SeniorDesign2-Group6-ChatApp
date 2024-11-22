@@ -34,6 +34,7 @@ function Friends({ isOpen, selectFriend }) {
       }
     }).then(function(data){
       if(data){
+        
       setFriends(data);
       }
 

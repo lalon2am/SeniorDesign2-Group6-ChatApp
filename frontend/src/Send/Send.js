@@ -62,7 +62,6 @@ function Send({ isOpen, loadMessages, friend }) {
 
   return (
     <div className="Send">
-{JSON.stringify(friend)}
       <div className="Send-input">
         <input
           type="text"

@@ -12,6 +12,7 @@ function Chat({ isOpen , friend, loadMessages, messages }) {
   useEffect(() => {
     if (isOpen) {
       loadMessages(friend);
+      setInterval(() => loadMessages(friend),3000);
     }
   }, [isOpen]);
 
@@ -36,8 +37,8 @@ function Chat({ isOpen , friend, loadMessages, messages }) {
   );
 
   return (<div>
-    {JSON.stringify(friend)}
-    <h2>Messages</h2>
+    
+    <h2>{friend.friendEmail}</h2>
     <div>
       {messages.map((message) => {
         const date = new Date(message.timestamp);
