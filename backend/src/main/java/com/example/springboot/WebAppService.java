@@ -2,13 +2,11 @@ package com.example.springboot;
 
 import jakarta.transaction.Transactional;
 import org.apache.catalina.User;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class WebAppService {
@@ -32,12 +30,23 @@ public class WebAppService {
     }
 
     public List<MessageRequest> getChats(FriendRequest friend) {
-        return messageRepository
+        List<MessageRequest> sentMessages = messageRepository
                 .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
                 .stream()
                 .map(message ->
                         new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())))
                 .toList();
+        List<MessageRequest> recievedMessages = messageRepository
+                .findBySenderAndRecipient(friend.getFriendId(), friend.getUserId())
+                .stream()
+                .map(message ->
+                        new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()))
+                )
+                .toList();
+        List<MessageRequest> allMessages = new ArrayList<>(sentMessages);
+        allMessages.addAll(recievedMessages);
+        allMessages.sort(Comparator.comparing(MessageRequest::getTimestamp));
+        return allMessages;
     }
 
     public UserRequest register(UserRequest userRequest) {
@@ -70,6 +79,8 @@ public class WebAppService {
         if (currentUser.isPresent() && friendUser.isPresent()) {
             FriendEntity entity = new FriendEntity(currentUser.get().getUserId(), friendUser.get().getUserId());
             entity = friendRepository.save(entity);
+            FriendEntity entity2 = new FriendEntity(friendUser.get().getUserId(), currentUser.get().getUserId());
+            friendRepository.save(entity2);
             return new FriendRequest(entity.getUserId().toString(), entity.getFriendId().toString(), friend.getFriendEmail());
         }
         return null;
