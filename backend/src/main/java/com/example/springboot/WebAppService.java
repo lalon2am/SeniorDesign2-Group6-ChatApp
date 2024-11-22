@@ -52,7 +52,7 @@ public class WebAppService {
                         if (user.isPresent()) {
                             email = user.get().getEmail();
                         }
-                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt());
+                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()));
                 })
                 .toList();
         List<MessageRequest> allMessages = new ArrayList<>(sentMessages);
