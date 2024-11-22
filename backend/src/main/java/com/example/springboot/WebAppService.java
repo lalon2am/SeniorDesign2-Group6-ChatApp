@@ -6,6 +6,7 @@ import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -92,7 +93,16 @@ public class WebAppService {
             return List.of();
         }
         return friendEntities.stream()
-                .map(friendEntity -> new FriendRequest(friendEntity.getUserId().toString(), friendEntity.getFriendId().toString(), ""))
+                .map(friendEntity -> {
+                    String email = "";
+                    Optional<UserEntity> user = userRepository.findById(friendEntity.getFriendId());
+                    if (user.isPresent())
+                        email = user.get().getEmail();
+                    return new FriendRequest(
+                            friendEntity.getUserId().toString(),
+                            friendEntity.getFriendId().toString(),
+                            email);
+                })
                 .toList();
     }
 
