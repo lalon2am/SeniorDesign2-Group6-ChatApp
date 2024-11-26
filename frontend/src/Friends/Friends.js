@@ -20,32 +20,32 @@ function Friends({ isOpen, selectFriend }) {
 
 
 
-  function loadFriendList(){
+  function loadFriendList() {
 
-    var myFriends= global.fetch(process.env.REACT_APP_API_URL + "/getFriends?userId="+localStorage.getItem("userId"), {
+    var myFriends = global.fetch(process.env.REACT_APP_API_URL + "/getFriends?userId=" + localStorage.getItem("userId"), {
       method: 'GET',
-    }).then(function(r){
-      if(r.ok){
+    }).then(function (r) {
+      if (r.ok) {
         return r.json().catch(e => {
           setFriends([]);
         });
-      }else{
+      } else {
         alert("connection failure")
       }
-    }).then(function(data){
-      if(data){
-        
-      setFriends(data);
+    }).then(function (data) {
+      if (data) {
+        console.log(data)
+        setFriends(data);
       }
 
     })
   }
 
   useEffect(() => {
-    try{
-    loadFriendList();
-    }catch(e){
-      
+    try {
+      loadFriendList();
+    } catch (e) {
+
     }
     const intervalId = setInterval(() => {
       loadFriendList();
@@ -62,7 +62,7 @@ function Friends({ isOpen, selectFriend }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userId:localStorage.getItem("userId"),friendEmail:inputValue, friendId:""})
+        body: JSON.stringify({ userId: localStorage.getItem("userId"), friendEmail: inputValue, friendId: "" })
       },
       ).then(function (r) {
         if (r.ok) {
@@ -70,45 +70,45 @@ function Friends({ isOpen, selectFriend }) {
 
           return r.json()
         } else {
-          
+
         }
 
       }).then(function (result) {
         //add alert of friend? you will see them pop up anyways so maybe unnecessary
       })
     } catch (e) {
-      
+
     };
   }
-  if (!isOpen){
+  if (!isOpen) {
     return null;
   }
   return (
-<div className="Friends sidebar">
-  <header className="Friends-header">
-    <p className='friendid'>Your email is {localStorage.getItem("email")})</p>
-    <div className="input-container">
-      <span>Add friends:</span>
-      <input
-        className="my-input"
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-    </div> 
-    <p className='friendaddresult'>{friendresult}</p>
-    <button onClick={addFriend}>Add</button>
-  </header>
-  <br></br>
-  <div className='friends-list'>
-    
-    <ul>
-    {friends.map((item, index) => (
-          <li onClick={() => selectFriend(item)} className="friendSelect" key={index}>{item.friendId}</li>
-        ))}
-    </ul>
-  </div>
-</div>
+    <div className="Friends sidebar">
+      <header className="Friends-header">
+        <p className='friendid'>Your email is {localStorage.getItem("email")})</p>
+        <div className="input-container">
+          <span>Add friends:</span>
+          <input
+            className="my-input"
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+        </div>
+        <p className='friendaddresult'>{friendresult}</p>
+        <button onClick={addFriend}>Add</button>
+      </header>
+      <br></br>
+      <div className='friends-list'>
+
+        <ul>
+          {friends.map((item, index) => (
+            <li onClick={() => selectFriend(item)} className="friendSelect" key={index}>{item.friendEmail}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 

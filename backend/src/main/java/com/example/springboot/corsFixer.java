@@ -10,7 +10,7 @@ public class corsFixer implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow all endpoints
-                .allowedOrigins("http://localhost:3000", "https://cps410chatappfrontenddev.onrender.com/", "https://cps410chatappfrontend.onrender.com") // Allow your React app's origin
+                .allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://cps410chatappfrontenddev.onrender.com/", "https://cps410chatappfrontend.onrender.com") // Allow your React app's origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow specific methods
                 .allowedHeaders("*"); // Allow all headers
     }
