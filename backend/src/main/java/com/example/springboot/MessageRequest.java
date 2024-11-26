@@ -7,13 +7,16 @@ public class MessageRequest {
 
     private String user;
 
+    private String recipient;
+
     private String text;
 
     private Date timestamp;
 
-    public MessageRequest(Long id, String user, String text, Date timestamp) {
+    public MessageRequest(Long id, String user, String recipient, String text, Date timestamp) {
         this.id = id;
         this.user = user;
+        this.recipient = recipient;
         this.text = text;
         this.timestamp = timestamp;
     }
@@ -29,6 +32,8 @@ public class MessageRequest {
     public String getText() {
         return text;
     }
+
+    public String getRecipient() { return recipient; }
 
     public Date getTimestamp() {
         return timestamp;

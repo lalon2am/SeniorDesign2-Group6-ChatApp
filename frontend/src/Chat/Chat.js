@@ -2,38 +2,17 @@ import './Chat.css';
 import Message from '../Message/Message';
 import React, { useEffect, useState } from 'react';
 
-function Chat({ isOpen }) {
-  const [messages, setMessages] = useState([]);
+function Chat({ isOpen , friend, loadMessages, messages }) {
+
   const [error, setError] = useState(false);
 
-  const loadMessages = async () => {
-    try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
 
-      if (response.ok) {
-        const json = await response.json();
-        // set id's for messages received
-        for (let i = 0; i < json.length; i++) {
-          json[i].id = i;
-        }
-        setMessages(json);
-      } else {
-        console.error('Failed to load messages:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-      setError(true);
-    }
-  }
+
 
   useEffect(() => {
     if (isOpen) {
-      loadMessages();
+      loadMessages(friend);
+      setInterval(() => loadMessages(friend),3000);
     }
   }, [isOpen]);
 
@@ -58,7 +37,8 @@ function Chat({ isOpen }) {
   );
 
   return (<div>
-    <h2>Messages</h2>
+    
+    <h2>{friend.friendEmail}</h2>
     <div>
       {messages.map((message) => {
         const date = new Date(message.timestamp);

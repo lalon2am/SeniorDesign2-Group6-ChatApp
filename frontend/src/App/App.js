@@ -1,5 +1,5 @@
 import './App.css';
-import Session from '../Session/Session'
+
 import Chat from '../Chat/Chat'
 import Send from '../Send/Send'
 import Auth from '../Auth/Auth'
@@ -8,9 +8,21 @@ import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 
 function App() {
+  function selectFriend(friend){
+    
+    setChatFriend(friend);
+    setChatOpen(true);
+
+
+
+
+    
+  }
   const [isAuthOpen, setAuthOpen] = useState(true);
   const [isAppOpen, setAppOpen] = useState(false);
-
+  const [isChatOpen, setChatOpen] = useState(false);
+  const [chatFriend, setChatFriend] = useState({});
+  const [messages, setMessages] = useState([]);
   // Get the saved login status 
   useEffect(() => {
     const auth = getAuth();
@@ -36,6 +48,50 @@ function App() {
     setAuthOpen(false);
     setAppOpen(true);
   };
+
+
+
+
+  function loadMessages(friend){
+    try{
+    const response = global.fetch(process.env.REACT_APP_API_URL + '/getMessages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(friend)
+    },
+    ).then(function (r) { {
+      
+    }
+      if (r.ok) {
+        //stuff
+        const contentType = r.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+        return r.json()
+        }
+      } else {
+  
+      }
+  
+    }).then(function (result) {
+      if(result){
+      setMessages(result);
+      }
+    })
+  }catch(e){
+
+  }
+  }
+
+
+
+
+
+
+
+
+
 if(isAuthOpen){
   return(
   <div className="App" data-testid="app-container">
@@ -50,15 +106,12 @@ if(isAuthOpen){
     <div className="App" data-testid="app-container">
       <header className="App-header">
       </header>
-      <Friends isOpen={isAppOpen} />
+      <Friends isOpen={isAppOpen} selectFriend={selectFriend}/>
       
       <div className='mainscreen'>
-      <Session isOpen={isAppOpen} />
-      
-      <div className="textbox">
-        <Chat isOpen={isAppOpen} />
-        <Send isOpen={isAppOpen} />
-      </div>
+      <Chat isOpen={isChatOpen} friend={chatFriend} loadMessages={loadMessages} messages={messages} />
+      <Send isOpen={isChatOpen} friend={chatFriend} loadMessages={loadMessages}/>
+
       </div>
 
 

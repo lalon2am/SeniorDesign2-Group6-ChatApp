@@ -14,7 +14,7 @@ import java.time.Instant;
 public class MessageEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "sender", nullable = false)
