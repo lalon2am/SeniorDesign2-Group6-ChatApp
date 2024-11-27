@@ -1,9 +1,5 @@
 import './Signup.css';
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import { auth, firestore } from '../firebase'; // Ensure you import your Firestore instance
-import { doc, setDoc, collection, addDoc, getDocs, query, where } from 'firebase/firestore'; // Import necessary Firestore functions
-import { saveUserToFirestore } from '../firestoreService';
 
 function Signup({ isOpen, onClose, handleSignUp, setName }) {
     const [username, setUsername] = useState('');
