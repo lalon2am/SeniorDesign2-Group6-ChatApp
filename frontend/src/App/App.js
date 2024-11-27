@@ -62,6 +62,7 @@ function App() {
   }
 
   function selectFriend(friend) {
+    console.log("set chat friend: " + friend.friendEmail)
     setChatFriend(friend);
     setChatOpen(true);
   }
