@@ -26,10 +26,8 @@ function Signup({ isOpen, onClose, handleSignUp, setName }) {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <p>Password: </p>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button onClick={() =>{handleSignUp(username,email,password)}}>Make new Account</button>
+                    <button onClick={() => { handleSignUp(username, email, password) }}>Make new Account</button>
                 </div>
-                <hr />
-                <h3>Or sign up with:</h3>
 
             </div>
         </div>
