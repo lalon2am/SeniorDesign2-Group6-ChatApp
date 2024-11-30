@@ -17,7 +17,7 @@ function Auth({ isOpen, closeAuth }) {
     setIsModalOpen(false);
   };
 
-  const handleSignUp = async (name,email,password) => {
+  const handleSignUp = async (name, email, password) => {
     if (!name || !email || !password) {
       alert('All fields are required');
       return;
@@ -40,26 +40,26 @@ function Auth({ isOpen, closeAuth }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email:email, password:password, username:name })
+        body: JSON.stringify({ email: email, password: password, username: name })
       },
       ).then(function (r) {
-        if(r.ok){
+        if (r.ok) {
           return r.json();
 
-        }else{
+        } else {
           alert('Sign up unsuccessful! nothing was returned');
 
         }
-      }).then(function(responsejson){
+      }).then(function (responsejson) {
         localStorage.setItem('userId', responsejson.id);
         localStorage.setItem('username', responsejson.username);
         localStorage.setItem('email', responsejson.email);
         alert('Sign up successful!');
-      closeModal();
+        closeModal();
       })
 
 
-      
+
     } catch (error) {
       alert(`Sign-Up Error: ${error.message}`);
     }
@@ -73,32 +73,34 @@ function Auth({ isOpen, closeAuth }) {
 
     try {
 
-const response = global.fetch(process.env.REACT_APP_API_URL + '/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({id:"", username:"", email:email, password:password })
-}
-).then(function (r) {
-  if(r.ok){
-    return r.json();
-  
-  }else{
-    console.log(r);
-    alert('Sign up unsuccessful! nothing was returned');
-    
-  }
-}).then(function(responsejson){
-    localStorage.setItem('userId', responsejson.id);
-    localStorage.setItem('username', responsejson.username);
-    localStorage.setItem('email', responsejson.email);
-alert('Sign in successful!');
-closeAuth(); // Close the authentication modal
-closeModal();
-})
+      const response = global.fetch(process.env.REACT_APP_API_URL + '/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: "", username: "", email: email, password: password })
+      }
+      ).then(function (r) {
+        if (r.ok) {
+          return r.json();
 
-      
+        } else {
+          console.log(r);
+          alert('Sign up unsuccessful! nothing was returned');
+
+        }
+      }).then(function (responsejson) {
+        const event = new CustomEvent("login", { detail: responsejson });
+        document.dispatchEvent(event);
+        // localStorage.setItem('userId', responsejson.id);
+        // localStorage.setItem('username', responsejson.username);
+        // localStorage.setItem('email', responsejson.email);
+        alert('Sign in successful!');
+        closeAuth(); // Close the authentication modal
+        closeModal();
+      })
+
+
     } catch (error) {
       alert('Login failed, please try again');
     }

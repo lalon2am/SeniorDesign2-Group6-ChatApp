@@ -1,9 +1,5 @@
 import './Signup.css';
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import { auth, firestore } from '../firebase'; // Ensure you import your Firestore instance
-import { doc, setDoc, collection, addDoc, getDocs, query, where } from 'firebase/firestore'; // Import necessary Firestore functions
-import { saveUserToFirestore } from '../firestoreService';
 
 function Signup({ isOpen, onClose, handleSignUp, setName }) {
     const [username, setUsername] = useState('');
@@ -26,10 +22,8 @@ function Signup({ isOpen, onClose, handleSignUp, setName }) {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <p>Password: </p>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button onClick={() =>{handleSignUp(username,email,password)}}>Make new Account</button>
+                    <button onClick={() => { handleSignUp(username, email, password) }}>Make new Account</button>
                 </div>
-                <hr />
-                <h3>Or sign up with:</h3>
 
             </div>
         </div>

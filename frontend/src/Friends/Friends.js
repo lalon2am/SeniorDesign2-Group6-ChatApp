@@ -1,13 +1,13 @@
 import './Friends.css';
 import React, { useEffect, useState } from 'react';
-function Friends({ isOpen, selectFriend }) {
+function Friends({ isOpen, selectFriend, user }) {
 
 
   const [userId, setUserId] = useState('');
 
   useEffect(() => {
     // Get userId from localStorage when the component mounts
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = user.id;
     setUserId(storedUserId || ''); // Set to empty string if userId is null
   }, []);
 
@@ -22,7 +22,7 @@ function Friends({ isOpen, selectFriend }) {
 
   function loadFriendList() {
 
-    var myFriends = global.fetch(process.env.REACT_APP_API_URL + "/getFriends?userId=" + localStorage.getItem("userId"), {
+    var myFriends = global.fetch(process.env.REACT_APP_API_URL + "/getFriends?userId=" + user.id, {
       method: 'GET',
     }).then(function (r) {
       if (r.ok) {
@@ -62,7 +62,7 @@ function Friends({ isOpen, selectFriend }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: localStorage.getItem("userId"), friendEmail: inputValue, friendId: "" })
+        body: JSON.stringify({ userId: user.id, friendEmail: inputValue, friendId: "" })
       },
       ).then(function (r) {
         if (r.ok) {
@@ -86,7 +86,7 @@ function Friends({ isOpen, selectFriend }) {
   return (
     <div className="Friends sidebar">
       <header className="Friends-header">
-        <p className='friendid'>Your email is {localStorage.getItem("email")})</p>
+        <p className='friendid'>Your email is {user.email})</p>
         <div className="input-container">
           <span>Add friends:</span>
           <input

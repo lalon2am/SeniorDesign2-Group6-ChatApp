@@ -2,19 +2,18 @@ import './Chat.css';
 import Message from '../Message/Message';
 import React, { useEffect, useState } from 'react';
 
-function Chat({ isOpen , friend, loadMessages, messages }) {
+function Chat({ isOpen, friend, loadMessages, messages }) {
 
   const [error, setError] = useState(false);
 
 
-
-
   useEffect(() => {
     if (isOpen) {
+      const intervalId = setInterval(() => loadMessages(friend), 3000);
       loadMessages(friend);
-      setInterval(() => loadMessages(friend),3000);
+      return () => clearInterval(intervalId);
     }
-  }, [isOpen]);
+  }, [isOpen, friend, loadMessages]);
 
   if (!isOpen) return null;
 
@@ -37,7 +36,7 @@ function Chat({ isOpen , friend, loadMessages, messages }) {
   );
 
   return (<div>
-    
+
     <h2>{friend.friendEmail}</h2>
     <div>
       {messages.map((message) => {
