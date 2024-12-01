@@ -1,7 +1,8 @@
+import { Timestamp } from 'firebase/firestore';
 import './Send.css';
 import React, { useEffect, useState } from 'react';
 
-function Send({ isOpen, onSendMessage }) {
+function Send({ isOpen, loadMessages, friend, user }) {
   const [message, setMessage] = useState('');
   const styles = {
     container: {
@@ -22,29 +23,31 @@ function Send({ isOpen, onSendMessage }) {
   };
   if (!isOpen) return null;
   async function onSendMessage(message) {
+
+    const response = global.fetch(process.env.REACT_APP_API_URL + '/addMessage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: message, user: friend.userId, recipient: friend.friendId, timestamp: Date.now() }),
+    },
+    ).then(function (r) {
+      if (r.ok) {
+        //stuff
+
+        return r.json()
+      } else {
+
+      }
+
+    }).then(function (result) {
+      if (result) {
+        loadMessages({ friendId: result.recipient, userId: user.id });
+      }
+    })
+
     //do stuff here!
     console.log(message);
-    try {//http://localhost:3000/savechat
-      const response = await fetch('https://cps410chatappbackenddev.onrender.com/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "text": message,
-          "user": "test",
-          "timestamp": new Date()
-        })
-      });
-
-      if (response.ok) {
-        console.log('Success');
-      } else {
-        console.error('Error:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
   }
   const handleInputChange = (event) => {
     setMessage(event.target.value);
@@ -59,7 +62,6 @@ function Send({ isOpen, onSendMessage }) {
 
   return (
     <div className="Send">
-
       <div className="Send-input">
         <input
           type="text"

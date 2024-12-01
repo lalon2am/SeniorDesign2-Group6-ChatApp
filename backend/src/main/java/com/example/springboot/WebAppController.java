@@ -1,70 +1,75 @@
 package com.example.springboot;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 @RestController
 public class WebAppController {
+    @Autowired
+    private WebAppService service;
 
-    // Create a nested class to represent the message structure
-    public static class Message {
-        private String text;
-        private String user;
-        private Instant timestamp;
-
-        // Getters and Setters
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getUser() {
-            return user;
-        }
-
-        public void setUser(String user) {
-            this.user = user;
-        }
-
-        public Instant getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(Instant timestamp) {
-            this.timestamp = timestamp;
-        }
+    @PostMapping("/addMessage")
+    public ResponseEntity<MessageRequest> addMessage(@RequestBody MessageRequest messageRequest) {
+        MessageRequest message = service.addChat(messageRequest);
+        if (message != null)
+            return ResponseEntity.ok(message);
+        return ResponseEntity.internalServerError().build();
     }
 
-    @PostMapping("/")
-    public ResponseEntity<String> addMessage(@RequestBody Message message) {
-        // Display the raw JSON input
-        //System.out.println("Received raw JSON message: " + jsonMessage);
+    @PostMapping("/getMessages")
+    public ResponseEntity<List<MessageRequest>> getMessages(@RequestBody FriendRequest friend) {
+        List<MessageRequest> messageEntity = service.getChats(friend);
+        if (messageEntity.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(messageEntity);
+    }
 
-        try {
-            // Use ObjectMapper to convert the JSON string to a Message object
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            Message message = objectMapper.readValue(jsonMessage, Message.class);
+	@PostMapping("/addFriend")
+    public ResponseEntity<FriendRequest> addfriend(@RequestBody FriendRequest friend) {
+        FriendRequest savedFriend = service.addFriend(friend);
+        if (savedFriend != null)
+		    return ResponseEntity.ok(savedFriend);
+        return ResponseEntity.internalServerError().build();
+	}
 
-            // Display the formatted output
-            System.out.println("Formatted output: " + message.getUser() + ": " + message.getText() + " " + message.getTimestamp());
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            System.err.println("Error parsing JSON: " + e.getMessage());
+    @GetMapping("/getFriends")
+    public ResponseEntity<List<FriendRequest>> getFriends(@RequestParam("userId") String currentUser) {
+        List<FriendRequest> friends = service.getFriends(currentUser);
+        if (friends == null)
             return ResponseEntity.internalServerError().build();
-        }
+
+        if (friends.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(friends);
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<FriendRequest> deleteFriend(@PathVariable String id) {
+//        FriendRequest deletedFriend = service.deleteFriend(id);
+//        if (deletedFriend != null)
+//            return ResponseEntity.ok(deletedFriend);
+//        return ResponseEntity.internalServerError().build();
+//    }
+    @PostMapping("/register")
+    public ResponseEntity<UserRequest> registerUser(@RequestBody UserRequest user) {
+        UserRequest userResponse = service.register(user);
+        if (userResponse != null)
+            return ResponseEntity.ok(userResponse);
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserRequest> login(@RequestBody UserRequest user) {
+        UserRequest userResponse = service.login(user);
+        if (userResponse != null)
+            return ResponseEntity.ok(userResponse);
+        return ResponseEntity.internalServerError().build();
     }
 }
