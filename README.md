@@ -6,12 +6,12 @@ The backend is a Spring Boot app using Spring MVC to host REST API endpoints for
 
 ### Deployment environments
 frontend: 
-- dev: https://cps410chatappfrontenddev.onrender.com  // Needs to be set up again
-- prod: https://cps410chatappfrontend.onrender.com    // Needs to be set up again
+- dev: https://bubble-chat-frontend-dev.onrender.com  
+- prod: https://bubble-chat-frontend.onrender.com    
 
 backend:
-- dev: https://cps410chatappbackenddev.onrender.com   // Needs to be set up again
-- prod: https://cps410chatappbackend.onrender.com     // Needs to be set up again
+- dev: https://bubble-chat-backend-dev.onrender.com  
+- prod: https://bubble-chat-backend.onrender.com     
 
 ### Local
 To run the application, visit the frontend and backend folders for instructions on running locally.
