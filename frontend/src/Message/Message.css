@@ -1,4 +1,57 @@
-.Message {
-  text-align: center;
+/* Chat bubbles (user and friend messages) */
+.message {
+  max-width: 75%;
+  padding: 12px 18px;
+  border-radius: 20px;
+  margin: 6px;
+  font-size: 14px;
+  position: relative;
+  word-wrap: break-word;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  animation: float 0.3s ease-in-out; /* Apply float animation to bubbles */
 }
 
+/* User's chat bubble - light blue/purple gradient */
+.user-message {
+  align-self: flex-end; /* Position it to the right */
+  background: linear-gradient(135deg, #9ad3ff, #d5b3ff);
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+/* Friend's chat bubble - soft pink/purple */
+.friend-message {
+  align-self: flex-start; /* Position it to the left */
+  background: linear-gradient(135deg, #ffcbf2, #ffdde1);
+  color: white;
+  border-bottom-left-radius: 5px;
+}
+
+/* Adding profile pic to the left of the friend's message */
+.friend-message .profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Animation for messages floating in */
+@keyframes float {
+  from {
+    transform: translateY(5px); /* Starts slightly lower */
+    opacity: 0; /* Starts transparent */
+  }
+  to {
+    transform: translateY(0); /* Ends at normal position */
+    opacity: 1; /* Ends fully visible */
+  }
+}
+
+/* Timestamps (message time) */
+.message-time {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+  display: block;
+  margin-top: 5px;
+  text-align: right;
+}

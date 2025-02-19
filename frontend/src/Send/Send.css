@@ -7,33 +7,59 @@
   margin: 10px auto; /* Center the box horizontally */
 }
 
+/* Flexbox styling for the input and send button */
 .Send-input {
   display: flex; /* Use flexbox for alignment */
   align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Ensure space between input and button */
+  width: 100%; /* Ensures the input area uses full width */
 }
 
+/* Input box styling */
 .Send-input input {
   flex: 1; /* Allow input to take available space */
-  width: 300px; /* Set a fixed width */
   padding: 10px; /* Space inside the input */
   border: 1px solid #ccc; /* Input border */
-  border-radius: 4px; /* Rounded corners for input */
+  border-radius: .5px; /* Rounded edges for a bubble-like effect */
   margin-right: 10px; /* Space between input and button */
+  background-color: #f1f1f1; /* Light background color for input */
+  font-size: 14px; /* Font size for text */
+  color: #333; /* Text color */
 }
 
-
+/* Button styling for send button */
 .Send-input button {
-  padding: 10px 15px; /* Space inside the button */
-  background-color: #007BFF; /* Button background color */
+  padding: 12px 18px; /* Space inside the button */
+  background: linear-gradient(135deg, #007BFF, #80C9FF); /* Blue/White gradient */
   color: white; /* Button text color */
   border: none; /* Remove default border */
-  border-radius: 4px; /* Rounded corners for button */
+  border-radius: 50%; /* Fully rounded edges for a bubble-like shape */
   cursor: pointer; /* Change cursor on hover */
+  animation: pop 0.2s ease-out; /* Add popping animation */
+  display: inline-flex; /* Ensure button aligns with text */
+  justify-content: center; /* Center text inside the button */
+  align-items: center; /* Center text vertically */
 }
 
+/* Hover effect for send button */
 .Send-input button:hover {
   background-color: #0056b3; /* Darker shade on hover */
 }
+
+/* Add a popping animation to the send button when clicked */
+@keyframes pop {
+  0% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(0.9); /* Shrinks slightly */
+  }
+  100% {
+    transform: scale(1); /* Returns to normal size */
+  }
+}
+
+/* Send button specific width */
 .sendButton {
-  width:40%;
+  width: 40%;
 }

@@ -46,7 +46,7 @@ function Send({ isOpen, loadMessages, friend, user }) {
       }
     })
 
-    //do stuff here!
+
     console.log(message);
   }
   const handleInputChange = (event) => {
