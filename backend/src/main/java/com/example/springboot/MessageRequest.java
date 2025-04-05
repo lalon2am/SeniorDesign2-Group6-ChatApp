@@ -1,9 +1,10 @@
 package com.example.springboot;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class MessageRequest {
-    private Long id;
+    private UUID id;
 
     private String user;
 
@@ -13,7 +14,7 @@ public class MessageRequest {
 
     private Date timestamp;
 
-    public MessageRequest(Long id, String user, String recipient, String text, Date timestamp) {
+    public MessageRequest(UUID id, String user, String recipient, String text, Date timestamp) {
         this.id = id;
         this.user = user;
         this.recipient = recipient;
@@ -21,7 +22,7 @@ public class MessageRequest {
         this.timestamp = timestamp;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

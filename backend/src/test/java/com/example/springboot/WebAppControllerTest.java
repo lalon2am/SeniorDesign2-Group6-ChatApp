@@ -47,13 +47,14 @@ public class WebAppControllerTest {
 		// arrange
 		ObjectMapper mapper = new ObjectMapper();
 		JavaTimeModule module = new JavaTimeModule();
+		UUID uuid = UUID.randomUUID();
 		mapper.registerModule(module);
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
+		FriendRequest request = new FriendRequest(UUID.randomUUID(), UUID.randomUUID(), "");
 		String requestBody = mapper.writeValueAsString(request);
 
-		MessageRequest message = new MessageRequest(0L, "test", "test", "test", Date.from(Instant.now()));
+		MessageRequest message = new MessageRequest(uuid, "test", "test", "test", Date.from(Instant.now()));
 		String expected = mapper.writeValueAsString(List.of(message));
 
 		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of(message));
@@ -73,7 +74,7 @@ public class WebAppControllerTest {
 	@Test
 	public void emptyChatsReturnsNoContent() throws Exception {
 		// arrange
-		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
+		FriendRequest request = new FriendRequest(UUID.randomUUID(), UUID.randomUUID(), "");
 		ObjectMapper mapper = new ObjectMapper();
 		String requestBody = mapper.writeValueAsString(request);
 		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of());

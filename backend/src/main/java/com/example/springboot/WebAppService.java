@@ -35,7 +35,7 @@ public class WebAppService {
                 .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
                 .stream()
                 .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        Optional<UserEntity> user = userRepository.findByUsername(message.getSender());
                         String email = "<Unknown>";
                         if (user.isPresent()) {
                             email = user.get().getEmail();
@@ -47,7 +47,7 @@ public class WebAppService {
                 .findBySenderAndRecipient(friend.getFriendId(), friend.getUserId())
                 .stream()
                 .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        Optional<UserEntity> user = userRepository.findByUsername(message.getSender());
                         String email = "<Unknown>";
                         if (user.isPresent()) {
                             email = user.get().getEmail();
@@ -68,7 +68,7 @@ public class WebAppService {
             createdUser.setPassword(userRequest.getPassword());
             createdUser.setUsername(userRequest.getUsername());
             userRepository.save(createdUser);
-            userRequest.setId(createdUser.getUserId().toString());
+            userRequest.setId(createdUser.getUserId());
             return userRequest;
         }
         return null;
@@ -78,7 +78,7 @@ public class WebAppService {
         Optional<UserEntity> optionalUser = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
-            userRequest.setId(user.getUserId().toString());
+            userRequest.setId(user.getUserId());
             userRequest.setUsername(user.getUsername());
             return userRequest;
         }
@@ -86,14 +86,14 @@ public class WebAppService {
     }
 
     public FriendRequest addFriend(FriendRequest friend) {
-        Optional<UserEntity> currentUser = userRepository.findById(UUID.fromString(friend.getUserId()));
+        Optional<UserEntity> currentUser = userRepository.findById(friend.getUserId());
         Optional<UserEntity> friendUser = userRepository.findByEmail(friend.getFriendEmail());
         if (currentUser.isPresent() && friendUser.isPresent()) {
             FriendEntity entity = new FriendEntity(currentUser.get().getUserId(), friendUser.get().getUserId());
             entity = friendRepository.save(entity);
             FriendEntity entity2 = new FriendEntity(friendUser.get().getUserId(), currentUser.get().getUserId());
             friendRepository.save(entity2);
-            return new FriendRequest(entity.getUserId().toString(), entity.getFriendId().toString(), friend.getFriendEmail());
+            return new FriendRequest(entity.getUserId(), entity.getFriendId(), friend.getFriendEmail());
         }
         return null;
     }
@@ -110,8 +110,8 @@ public class WebAppService {
                     if (user.isPresent())
                         email = user.get().getEmail();
                     return new FriendRequest(
-                            friendEntity.getUserId().toString(),
-                            friendEntity.getFriendId().toString(),
+                            friendEntity.getUserId(),
+                            friendEntity.getFriendId(),
                             email);
                 })
                 .toList();

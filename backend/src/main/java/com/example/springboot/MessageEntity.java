@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "messages")
@@ -15,7 +16,7 @@ public class MessageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     @Column(name = "sender", nullable = false)
     private String sender;
@@ -30,7 +31,7 @@ public class MessageEntity {
     private Instant sentAt;
 
     public MessageEntity() {}
-    public MessageEntity(Long id, String sender, String recipient, String message, Instant sentAt) {
+    public MessageEntity(UUID id, String sender, String recipient, String message, Instant sentAt) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
@@ -38,8 +39,8 @@ public class MessageEntity {
         this.sentAt = sentAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
     public String getSender() { return sender; }
     public void setSender(String sender) { this.sender = sender; }

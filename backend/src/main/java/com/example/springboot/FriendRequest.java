@@ -1,9 +1,11 @@
 package com.example.springboot;
 
-public class FriendRequest {
-    private String userId;
+import java.util.UUID;
 
-    private String friendId;
+public class FriendRequest {
+    private UUID userId;
+
+    private UUID friendId;
 
     private String friendEmail;
 
@@ -11,17 +13,17 @@ public class FriendRequest {
 
     }
 
-    public FriendRequest(String userId, String friendId, String friendEmail) {
+    public FriendRequest(UUID userId, UUID friendId, String friendEmail) {
         this.userId = userId;
         this.friendId = friendId;
         this.friendEmail = friendEmail;
     }
 
-    public String getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public String getFriendId() {
+    public UUID getFriendId() {
         return friendId;
     }
 

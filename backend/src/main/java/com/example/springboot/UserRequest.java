@@ -1,7 +1,9 @@
 package com.example.springboot;
 
+import java.util.UUID;
+
 public class UserRequest {
-    private String id;
+    private UUID id;
 
     private String username;
 
@@ -13,18 +15,18 @@ public class UserRequest {
 
     }
 
-    public UserRequest(String id, String username, String email, String password) {
+    public UserRequest(UUID id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
