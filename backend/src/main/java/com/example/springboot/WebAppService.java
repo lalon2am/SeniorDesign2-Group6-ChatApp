@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+
+import java.math.BigInteger;
 import java.util.*;
 
 @Service
@@ -35,7 +37,7 @@ public class WebAppService {
                 .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
                 .stream()
                 .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        Optional<UserEntity> user = userRepository.findById(new BigInteger(message.getSender()));
                         String email = "<Unknown>";
                         if (user.isPresent()) {
                             email = user.get().getEmail();
@@ -47,7 +49,7 @@ public class WebAppService {
                 .findBySenderAndRecipient(friend.getFriendId(), friend.getUserId())
                 .stream()
                 .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
+                        Optional<UserEntity> user = userRepository.findById(new BigInteger(message.getSender()));
                         String email = "<Unknown>";
                         if (user.isPresent()) {
                             email = user.get().getEmail();
@@ -86,7 +88,7 @@ public class WebAppService {
     }
 
     public FriendRequest addFriend(FriendRequest friend) {
-        Optional<UserEntity> currentUser = userRepository.findById(UUID.fromString(friend.getUserId()));
+        Optional<UserEntity> currentUser = userRepository.findById(new BigInteger(friend.getUserId()));
         Optional<UserEntity> friendUser = userRepository.findByEmail(friend.getFriendEmail());
         if (currentUser.isPresent() && friendUser.isPresent()) {
             FriendEntity entity = new FriendEntity(currentUser.get().getUserId(), friendUser.get().getUserId());
@@ -99,7 +101,7 @@ public class WebAppService {
     }
 
     public List<FriendRequest> getFriends(String currentUser) {
-        List<FriendEntity> friendEntities = friendRepository.findByUserId(UUID.fromString(currentUser));
+        List<FriendEntity> friendEntities = friendRepository.findByUserId(new BigInteger(currentUser));
         if (friendEntities.isEmpty()) {
             return List.of();
         }

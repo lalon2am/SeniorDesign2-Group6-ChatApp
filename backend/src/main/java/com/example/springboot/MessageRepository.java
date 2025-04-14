@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.math.BigInteger;
 
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     @Query("select m from MessageEntity m where m.sender = :sender and m.recipient = :recipient")

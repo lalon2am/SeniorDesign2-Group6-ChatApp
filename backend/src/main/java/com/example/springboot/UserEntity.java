@@ -3,6 +3,7 @@ package com.example.springboot;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 @Entity
@@ -10,12 +11,8 @@ import java.util.UUID;
 public class UserEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    private UUID userId;
+    @GeneratedValue
+    private BigInteger userId;
 
     private String username;
 
@@ -23,7 +20,7 @@ public class UserEntity {
 
     private String email;
 
-    public UUID getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
 

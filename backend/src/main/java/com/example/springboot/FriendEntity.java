@@ -2,7 +2,8 @@ package com.example.springboot;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+import java.math.BigInteger;
+
 
 @Entity
 @IdClass(FriendKey.class)
@@ -10,13 +11,13 @@ import java.util.UUID;
 public class FriendEntity {
     @Id
     @Column(name = "user_id")
-    private UUID userId;
+    private BigInteger userId;
 
     @Id
     @Column(name = "friend_id")
-    private UUID friendId;
+    private BigInteger friendId;
 
-    public FriendEntity(UUID userId, UUID friendId) {
+    public FriendEntity(BigInteger userId, BigInteger friendId) {
         this.userId = userId;
         this.friendId = friendId;
     }
@@ -25,11 +26,11 @@ public class FriendEntity {
 
     }
 
-    public UUID getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
 
-    public UUID getFriendId() {
+    public BigInteger getFriendId() {
         return friendId;
     }
 }
