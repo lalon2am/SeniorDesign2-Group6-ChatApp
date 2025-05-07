@@ -43,4 +43,14 @@ public class UserRequest {
     public String getPassword() {
         return password;
     }
+
+    public void setEmail(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
+    }
+
+    public void setPassword(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPassword'");
+    }
 }

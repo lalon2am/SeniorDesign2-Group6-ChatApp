@@ -1,8 +1,8 @@
-# CPS 498 Chat App Project
+# Bubble-Chat App
 
-This is a monorepo for our full stack chat app project containing database table information, the frontend code, and the backend code.
-The frontend is a ReactJS app which connects to the backend using REST API requets. It's purpose is to provide users the ability to login as a user or create a user, and then create chat sessions with other users or groups of users.
-The backend is a Spring Boot app using Spring MVC to host REST API endpoints for the frontend to access, and using JDBC to connect to the database. Spring security will be used to authenticate between endpoints.
+A full-stack app with [Backend] (Gradle/Spring Boot) and [Frontend] (React(Next)/Javascript/Node).
+
+---
 
 ### Deployment environments
 frontend: 
@@ -13,5 +13,21 @@ backend:
 - dev: https://bubble-chat-backend-dev.onrender.com  
 - prod: https://bubble-chat-backend.onrender.com     
 
-### Local
-To run the application, visit the frontend and backend folders for instructions on running locally.
+---
+
+## 🚀 **Quick Start**
+
+- **Backend**: install Java JDK 17+
+- **Frontend**: install Node.js 18+
+
+---
+
+## 🔧 **Setup**
+
+### 1. cd backend          # Navigate to backend
+    java -version # ensure java JDK is installed
+
+### 2. cd ../frontend      # Navigate to frontend
+    npm install # Install deps
+
+### 3. Both directories have their own ReadMe file that will show how to run locally

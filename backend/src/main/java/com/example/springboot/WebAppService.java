@@ -1,122 +1,98 @@
+// File: WebAppService.java
 package com.example.springboot;
 
 import jakarta.transaction.Transactional;
-import org.apache.catalina.User;
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.Option;
-import java.util.*;
+import java.time.Instant;
+import java.util.List;
 
 @Service
 public class WebAppService {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebAppService.class);
+
     @Autowired
     private MessageRepository messageRepository;
 
     @Autowired
-    private FriendRepository friendRepository;
+    private RestTemplate restTemplate;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final String NODE_API_URL = "http://localhost:3000/api";
 
-    public MessageRequest addChat(MessageRequest messageRequest) {
-        MessageEntity messageEntity = new MessageEntity();
-        messageEntity.setMessage(messageRequest.getText());
-        messageEntity.setSender(messageRequest.getUser());
-        messageEntity.setRecipient(messageRequest.getRecipient());
-        messageEntity.setSentAt(messageRequest.getTimestamp().toInstant());
-        messageEntity = messageRepository.save(messageEntity);
-        return new MessageRequest(messageEntity.getId(), messageEntity.getSender(), messageEntity.getRecipient(), messageEntity.getMessage(), Date.from(messageEntity.getSentAt()));
+    @Transactional
+    public MessageEntity saveMessage(MessageRequest messageRequest) {
+        String sender = messageRequest.getSender();
+        String recipient = messageRequest.getRecipient();
+
+        // Verify users exist via Node.js API
+        // if (!verifyUserExists(sender)) {
+        //     throw new IllegalArgumentException("Sender does not exist: " + sender);
+        // }
+        // if (!verifyUserExists(recipient)) {
+        //     throw new IllegalArgumentException("Recipient does not exist: " + recipient);
+        // }
+
+        // Create the message entity and save
+        MessageEntity message = new MessageEntity(
+                sender,
+                recipient,
+                messageRequest.getMessage(),
+                Instant.now()
+        );
+
+        return messageRepository.save(message);
     }
 
-    public List<MessageRequest> getChats(FriendRequest friend) {
-        List<MessageRequest> sentMessages = messageRepository
-                .findBySenderAndRecipient(friend.getUserId(), friend.getFriendId())
-                .stream()
-                .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
-                        String email = "<Unknown>";
-                        if (user.isPresent()) {
-                            email = user.get().getEmail();
-                        }
-                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()));
-                })
-                .toList();
-        List<MessageRequest> recievedMessages = messageRepository
-                .findBySenderAndRecipient(friend.getFriendId(), friend.getUserId())
-                .stream()
-                .map(message -> {
-                        Optional<UserEntity> user = userRepository.findById(UUID.fromString(message.getSender()));
-                        String email = "<Unknown>";
-                        if (user.isPresent()) {
-                            email = user.get().getEmail();
-                        }
-                        return new MessageRequest(message.getId(), email, message.getRecipient(), message.getMessage(), Date.from(message.getSentAt()));
-                })
-                .toList();
-        List<MessageRequest> allMessages = new ArrayList<>(sentMessages);
-        allMessages.addAll(recievedMessages);
-        allMessages.sort(Comparator.comparing(MessageRequest::getTimestamp));
-        return allMessages;
-    }
+    public List<MessageEntity> getConversation(String user1, String user2) {
+        logger.info("Getting conversation between: {} and {}", user1, user2);
 
-    public UserRequest register(UserRequest userRequest) {
-        if (userRepository.findByEmail(userRequest.getEmail()).isEmpty()) {
-            UserEntity createdUser = new UserEntity();
-            createdUser.setEmail(userRequest.getEmail());
-            createdUser.setPassword(userRequest.getPassword());
-            createdUser.setUsername(userRequest.getUsername());
-            userRepository.save(createdUser);
-            userRequest.setId(createdUser.getUserId().toString());
-            return userRequest;
+        if (user1 == null || user2 == null) {
+            throw new IllegalArgumentException("User IDs must not be null");
         }
-        return null;
+
+        return messageRepository.findConversationBetweenUsers(user1, user2);
     }
 
-    public UserRequest login(UserRequest userRequest) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
-        if (optionalUser.isPresent()) {
-            UserEntity user = optionalUser.get();
-            userRequest.setId(user.getUserId().toString());
-            userRequest.setUsername(user.getUsername());
-            return userRequest;
+    private boolean verifyUserExists(String userId) {
+        String userExistsUrl = NODE_API_URL + "/users/exists/" + userId;
+        try {
+            ResponseEntity<Boolean> response = restTemplate.getForEntity(userExistsUrl, Boolean.class);
+            return response.getStatusCode().is2xxSuccessful() && Boolean.TRUE.equals(response.getBody());
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+                logger.warn("User with ID {} not found on Node.js backend.", userId);
+                return false;
+            } else {
+                logger.error("Error verifying user existence for userId: {}. Status: {}", userId, ex.getStatusCode(), ex);
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error("Error verifying user existence for userId: {}", userId, e);
+            return false;
         }
-        return null;
     }
 
-    public FriendRequest addFriend(FriendRequest friend) {
-        Optional<UserEntity> currentUser = userRepository.findById(UUID.fromString(friend.getUserId()));
-        Optional<UserEntity> friendUser = userRepository.findByEmail(friend.getFriendEmail());
-        if (currentUser.isPresent() && friendUser.isPresent()) {
-            FriendEntity entity = new FriendEntity(currentUser.get().getUserId(), friendUser.get().getUserId());
-            entity = friendRepository.save(entity);
-            FriendEntity entity2 = new FriendEntity(friendUser.get().getUserId(), currentUser.get().getUserId());
-            friendRepository.save(entity2);
-            return new FriendRequest(entity.getUserId().toString(), entity.getFriendId().toString(), friend.getFriendEmail());
+    private boolean verifyFriendship(String user1, String user2) {
+        try {
+            return restTemplate.getForObject(
+                    NODE_API_URL + "/friends/verify?user1=" + user1 + "&user2=" + user2,
+                    Boolean.class
+            );
+        } catch (Exception e) {
+            return false;
         }
-        return null;
     }
 
-    public List<FriendRequest> getFriends(String currentUser) {
-        List<FriendEntity> friendEntities = friendRepository.findByUserId(UUID.fromString(currentUser));
-        if (friendEntities.isEmpty()) {
-            return List.of();
-        }
-        return friendEntities.stream()
-                .map(friendEntity -> {
-                    String email = "";
-                    Optional<UserEntity> user = userRepository.findById(friendEntity.getFriendId());
-                    if (user.isPresent())
-                        email = user.get().getEmail();
-                    return new FriendRequest(
-                            friendEntity.getUserId().toString(),
-                            friendEntity.getFriendId().toString(),
-                            email);
-                })
-                .toList();
+    // Method to retrieve all messages
+    public List<MessageEntity> getAllMessages() {
+        return messageRepository.findAll();
     }
-
-//    public void deleteFriend(String friendId) {
-//    }
 }
