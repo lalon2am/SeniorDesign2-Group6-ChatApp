@@ -10,9 +10,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
 @SpringBootApplication
+
 public class SpringbootApplication {
 
 	public static void main(String[] args) {
@@ -39,7 +41,13 @@ public class SpringbootApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/").allowedOrigins("*");
+				registry.addMapping("/**")
+					.allowedOrigins("http://localhost:3000", "http://localhost:3001", 
+								"https://bubble-chat-frontend-dev.onrender.com", 
+								"https://bubble-chat-frontend.onrender.com")
+					.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+					.allowedHeaders("*")
+					.allowCredentials(true);
 			}
 		};
 	}
