@@ -1,20 +1,21 @@
 package com.example.springboot;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 public class UserDTO {
-    private UUID userId;
+    private BigInteger userId;
     private String username;
     private String email;
     
-    public UserDTO(UUID userId, String username, String email) {
+    public UserDTO(BigInteger userId, String username, String email) {
         this.userId = userId;
         this.username = username;
         this.email = email;
     }
     
     // Getters
-    public UUID getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
     
@@ -27,7 +28,7 @@ public class UserDTO {
     }
     
     // Setters (if needed)
-    public void setUserId(UUID userId) {
+    public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
     
