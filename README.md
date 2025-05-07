@@ -6,8 +6,8 @@ A full-stack app with [Backend] (Gradle/Spring Boot) and [Frontend] (React(Next)
 
 ### Deployment environments
 frontend: 
-- dev: https://bubble-chat-frontend-dev.onrender.com  
-- prod: https://bubble-chat-frontend.onrender.com    
+- dev: https://bubble-chat-frontend-dev.onrender.com  //As a result of our Frontend Overhaul, this is currently not working
+- prod: https://bubble-chat-frontend.onrender.com    //As a result of our Frontend Overhaul, this is currently not working
 
 backend:
 - dev: https://bubble-chat-backend-dev.onrender.com  
@@ -30,4 +30,4 @@ backend:
 ### 2. cd ../frontend      # Navigate to frontend
     npm install # Install deps
 
-### 3. Both directories have their own ReadMe file that will show how to run locally
+### 3. Both directories have their own Read Me file that will walk you through how to run the backend and frontend locally
