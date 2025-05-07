@@ -1,41 +1,53 @@
+//MessageRequest.java
 package com.example.springboot;
 
 import java.util.Date;
 
 public class MessageRequest {
-    private Long id;
-
-    private String user;
-
-    private String recipient;
-
-    private String text;
-
+    private String sender;  // Changed to String for sender
+    private String recipient;  // Changed to String for recipient
+    private String message;
     private Date timestamp;
 
-    public MessageRequest(Long id, String user, String recipient, String text, Date timestamp) {
-        this.id = id;
-        this.user = user;
+    // Constructors
+    public MessageRequest() {}
+
+    public MessageRequest(String sender, String recipient, String message, Date timestamp) {
+        this.sender = sender;
         this.recipient = recipient;
-        this.text = text;
-        this.timestamp = timestamp;
+        this.message = message;
+        this.timestamp = new Date();
     }
 
-    public Long getId() {
-        return id;
+    public String getSender() {
+        return sender;
     }
 
-    public String getUser() {
-        return user;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getText() {
-        return text;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public String getRecipient() { return recipient; }
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Date getTimestamp() {
         return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

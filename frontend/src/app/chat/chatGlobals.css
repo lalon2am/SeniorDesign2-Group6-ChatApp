@@ -1,0 +1,37 @@
+/* chatGlobals.css
+/* ----- ROOT VARIABLES ----- */
+:root {
+  /* Light Theme */
+  --light-bg: #e9c7ff;
+  --light-text: #6a4b8a;
+  --light-sidebar: rgba(255, 255, 255, 0.9);
+  --light-chat-bg: rgba(248, 249, 250, 0.9);
+  --light-message-received: linear-gradient(145deg, #ffffff, #f9f0ff);
+  --light-message-sent: linear-gradient(145deg, #d599fb, #9f8ac7);
+  --light-accent: #9f8ac7;
+  --light-accent-secondary: #d599fb;
+  --light-border: rgba(159, 138, 199, 0.2);
+  --dark-accent: #a33de1;
+
+  /* Dark Theme */
+  --dark-bg: #260041;
+  --dark-text: #f7ddfc;
+  --dark-sidebar: rgba(30, 0, 60, 0.9);
+  --dark-chat-bg: rgba(18, 0, 36, 0.9);
+  --dark-message-received: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+  --dark-message-sent: linear-gradient(145deg, #d599fb, #9f8ac7);
+  --dark-accent: #d599fb;
+  --dark-accent-secondary: #9f8ac7;
+  --dark-border: rgba(213, 153, 251, 0.2);
+
+  /* Bubble effects */
+  --bubble-color-light: rgba(213, 153, 251, 0.15);
+  --bubble-color-dark: rgba(193, 140, 250, 0.2);
+
+  /* Shared */
+  --white: #ffffff;
+  --black: #000000;
+  --success: #a8e6cf;
+  --danger: #ffaaa5;
+  --font-comic: 'Comic Sans MS', 'Marker Felt', 'Chalkboard SE', cursive, sans-serif;
+}

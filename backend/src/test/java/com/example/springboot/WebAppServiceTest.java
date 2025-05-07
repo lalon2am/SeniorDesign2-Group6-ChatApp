@@ -1,45 +1,89 @@
 package com.example.springboot;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class WebAppServiceTest {
-	@Autowired
-	private WebAppService service;
 
-	@MockBean
-	private MessageRepository repository;
+    @Mock
+    private MessageRepository messageRepository;
 
-//	@Test
-//	public void getChats() throws Exception {
-//		// arrange
-//		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
-//		MessageEntity message = new MessageEntity(0L, "test", "test", "test", Instant.now());
-//		List<MessageRequest> expected = List.of(new MessageRequest(message.getId(), message.getSender(), message.getRecipient(), message.getMessage(), Date.from(message.getSentAt())));
-//
-//		when(repository.findBySenderAndRecipient(request.getUserId(), request.getFriendId())).thenReturn(List.of(message));
-//
-//		// act
-//		List<MessageRequest> result = service.getChats(request);
-//
-//		// assert
-//		for (int i = 0; i < expected.size() && i < result.size(); i++) {
-//			assertEquals(expected.get(i).getId(), result.get(i).getId());
-//			assertEquals(expected.get(i).getUser(), result.get(i).getUser());
-//			assertEquals(expected.get(i).getText(), result.get(i).getText());
-//			assertEquals(expected.get(i).getTimestamp(), result.get(i).getTimestamp());
-//		}
-//	}
+    @Mock
+    private RestTemplate restTemplate;
+
+    @InjectMocks
+    private WebAppService webAppService;
+
+    @Test
+    public void saveMessage_Success() {
+        // Arrange
+        String sender = "1";
+        String recipient = "2";
+        String messageText = "Hello";
+
+        MessageRequest request = new MessageRequest();
+        request.setSender(sender);
+        request.setRecipient(recipient);
+        request.setMessage(messageText);
+
+        MessageEntity savedMessage = new MessageEntity();
+        savedMessage.setSender(sender);
+        savedMessage.setRecipient(recipient);
+        savedMessage.setMessage(messageText);
+        savedMessage.setSentAt(Instant.now());
+
+        when(messageRepository.save(any(MessageEntity.class))).thenReturn(savedMessage);
+
+        // Act
+        MessageEntity result = webAppService.saveMessage(request);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(sender, result.getSender());
+        assertEquals(recipient, result.getRecipient());
+        assertEquals(messageText, result.getMessage());
+
+        verify(messageRepository, times(1)).save(any(MessageEntity.class));
+
+        // Remove the verification of restTemplate calls for user existence:
+        // verify(restTemplate, times(1)).getForEntity(contains("/users/exists/" + sender), eq(Boolean.class));
+        // verify(restTemplate, times(1)).getForEntity(contains("/users/exists/" + recipient), eq(Boolean.class));
+    }
+
+    @Test
+    public void getConversation_Success() {
+        // Arrange
+        String user1 = "1";  // Changed from Long to String
+        String user2 = "2";  // Changed from Long to String
+
+        MessageEntity m1 = new MessageEntity(user1, user2, "Hi", Instant.now());
+        MessageEntity m2 = new MessageEntity(user2, user1, "Hello", Instant.now());
+
+        when(messageRepository.findConversationBetweenUsers(user1, user2)).thenReturn(List.of(m1, m2));
+
+        // Act
+        List<MessageEntity> result = webAppService.getConversation(user1, user2);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Hi", result.get(0).getMessage());
+        assertEquals("Hello", result.get(1).getMessage());
+
+        verify(messageRepository, times(1)).findConversationBetweenUsers(user1, user2);
+    }
 }

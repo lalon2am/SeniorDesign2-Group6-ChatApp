@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.springboot.WebAppControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-05-07T04:07:29" hostname="MINO-DESKTOP" time="1.62">
+  <properties/>
+  <testcase name="getConversation_Success()" classname="com.example.springboot.WebAppControllerTest" time="1.355"/>
+  <testcase name="sendMessage_SenderDoesNotExist_ReturnsBadRequestWithErrorMessage()" classname="com.example.springboot.WebAppControllerTest" time="0.173"/>
+  <testcase name="sendMessage_Success()" classname="com.example.springboot.WebAppControllerTest" time="0.076"/>
+  <system-out><![CDATA[2025-05-07T00:07:13.184-04:00  INFO 24508 --- [message-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.springboot.WebAppControllerTest]: WebAppControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-05-07T00:07:13.225-04:00  INFO 24508 --- [message-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.springboot.SpringbootApplication for test class com.example.springboot.WebAppControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2025-05-07T00:07:13.433-04:00  INFO 24508 --- [message-service] [    Test worker] c.e.springboot.WebAppControllerTest      : Starting WebAppControllerTest using Java 21.0.6 with PID 24508 (started by rrhmi in C:\Spring 2025\chat\SeniorDesign2-Group6-ChatApp\backend)
+2025-05-07T00:07:13.434-04:00  INFO 24508 --- [message-service] [    Test worker] c.e.springboot.WebAppControllerTest      : The following 1 profile is active: "test"
+2025-05-07T00:07:15.732-04:00  INFO 24508 --- [message-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-07T00:07:15.799-04:00  INFO 24508 --- [message-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 2 JPA repository interfaces.
+2025-05-07T00:07:19.603-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-05-07T00:07:19.758-04:00  INFO 24508 --- [message-service] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-07T00:07:19.764-04:00  INFO 24508 --- [message-service] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-05-07T00:07:20.439-04:00  INFO 24508 --- [message-service] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-07T00:07:20.449-04:00  INFO 24508 --- [message-service] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6997 ms
+2025-05-07T00:07:21.980-04:00  INFO 24508 --- [message-service] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-07T00:07:22.046-04:00  INFO 24508 --- [message-service] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-07T00:07:22.182-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-07T00:07:22.195-04:00  INFO 24508 --- [message-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-05-07T00:07:22.200-04:00  INFO 24508 --- [message-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn5: url=jdbc:h2:mem:testdb user=SA
+2025-05-07T00:07:22.201-04:00  INFO 24508 --- [message-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-05-07T00:07:22.207-04:00  WARN 24508 --- [message-service] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-07T00:07:22.727-04:00  INFO 24508 --- [message-service] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table if exists messages 
+       alter column message set data type TEXT
+2025-05-07T00:07:22.756-04:00  INFO 24508 --- [message-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-07T00:07:24.033-04:00  WARN 24508 --- [message-service] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-07T00:07:28.478-04:00  INFO 24508 --- [message-service] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2025-05-07T00:07:28.479-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-05-07T00:07:28.560-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2025-05-07T00:07:28.636-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 155 ms
+2025-05-07T00:07:28.876-04:00  INFO 24508 --- [message-service] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 64227 (http) with context path '/'
+2025-05-07T00:07:28.915-04:00  INFO 24508 --- [message-service] [    Test worker] c.e.springboot.WebAppControllerTest      : Started WebAppControllerTest in 15.656 seconds (process running for 48.56)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
