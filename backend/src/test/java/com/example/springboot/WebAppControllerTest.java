@@ -1,92 +1,135 @@
 package com.example.springboot;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@TestPropertySource(properties = {
+    "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL",
+    "spring.jpa.hibernate.ddl-auto=create-drop",
+    "spring.flyway.enabled=false"
+})
 public class WebAppControllerTest {
 
-	@Autowired
-	private MockMvc mvc;
+    @Autowired
+    private MockMvc mvc;
 
-	@MockBean
-	private WebAppService service;
+    private ObjectMapper objectMapper;
 
-//	@Test
-//	public void getHello() throws Exception {
-//		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isOk())
-//				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
-//	}
+    @MockBean
+    private WebAppService webAppService;
 
-	@Test
-	public void getChats() throws Exception {
-		// arrange
-		ObjectMapper mapper = new ObjectMapper();
-		JavaTimeModule module = new JavaTimeModule();
-		mapper.registerModule(module);
-		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+    }
 
-		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
-		String requestBody = mapper.writeValueAsString(request);
+    @Test
+    public void sendMessage_Success() throws Exception {
+        MessageEntity testMessage = new MessageEntity();
+        testMessage.setId(100L);
+        testMessage.setSender("1");
+        testMessage.setRecipient("2");
+        testMessage.setMessage("Hello");
+        testMessage.setSentAt(Instant.parse("2023-01-01T00:00:00Z"));
 
-		MessageRequest message = new MessageRequest(0L, "test", "test", "test", Date.from(Instant.now()));
-		String expected = mapper.writeValueAsString(List.of(message));
+        MessageRequest request = new MessageRequest();
+        request.setSender("1");
+        request.setRecipient("2");
+        request.setMessage("Hello");
 
-		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of(message));
+        when(webAppService.saveMessage(any(MessageRequest.class))).thenReturn(testMessage);
 
-		// act
-		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/getMessages")
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON)
-						.content(requestBody))
-				.andExpect(status().isOk()).andReturn();
-		String responseString = result.getResponse().getContentAsString();
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated()) // Expecting 201 Created on success
+                .andReturn();
 
-		// assert
-		assertEquals(expected, responseString);
-	}
+        MessageEntity response = objectMapper.readValue(result.getResponse().getContentAsString(), MessageEntity.class);
 
-	@Test
-	public void emptyChatsReturnsNoContent() throws Exception {
-		// arrange
-		FriendRequest request = new FriendRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "");
-		ObjectMapper mapper = new ObjectMapper();
-		String requestBody = mapper.writeValueAsString(request);
-		when(service.getChats(Mockito.any(FriendRequest.class))).thenReturn(List.of());
+        assertEquals(testMessage.getSender(), response.getSender());
+        assertEquals(testMessage.getRecipient(), response.getRecipient());
+        assertEquals(testMessage.getMessage(), response.getMessage());
+        assertEquals(testMessage.getSentAt(), response.getSentAt());
+        assertNotNull(response.getId());
+    }
 
-		// act
-		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/getMessages")
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON)
-						.content(requestBody))
-				.andExpect(status().isNoContent()).andReturn();
-		String responseString = result.getResponse().getContentAsString();
+    @Test
+    public void sendMessage_SenderDoesNotExist_ReturnsBadRequestWithErrorMessage() throws Exception {
+        MessageRequest request = new MessageRequest();
+        request.setSender("nonExistentSender");
+        request.setRecipient("2");
+        request.setMessage("Hello");
 
-		// assert
-		assertEquals("", responseString);
-	}
+        String errorMessage = "Sender does not exist: nonExistentSender";
+        when(webAppService.saveMessage(any(MessageRequest.class))).thenThrow(new IllegalArgumentException(errorMessage));
+
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // Expect JSON response
+                .andReturn();
+
+        Map<String, String> errorResponse = objectMapper.readValue(
+                result.getResponse().getContentAsString(),
+                new TypeReference<>() {}
+        );
+
+        assertEquals(errorMessage, errorResponse.get("message"));
+    }
+
+    @Test
+    public void getConversation_Success() throws Exception {
+        Instant fixedTimestamp = Instant.parse("2023-01-01T00:00:00Z");
+        List<MessageEntity> mockMessages = List.of(
+                new MessageEntity(
+                        "1",
+                        "2",
+                        "Hi",
+                        fixedTimestamp
+                )
+        );
+
+        when(webAppService.getConversation("1", "2"))
+                .thenReturn(mockMessages);
+
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/messages/conversation")
+                        .param("user1", "1")
+                        .param("user2", "2"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        List<MessageEntity> response = objectMapper.readValue(
+                result.getResponse().getContentAsString(),
+                new TypeReference<>() {}
+        );
+
+        assertEquals(1, response.size());
+        assertEquals("Hi", response.get(0).getMessage());
+    }
 }
