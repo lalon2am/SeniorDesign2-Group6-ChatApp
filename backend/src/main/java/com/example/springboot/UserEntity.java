@@ -1,5 +1,7 @@
 package com.example.springboot;
 
+import java.math.BigInteger;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +11,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private BigInteger userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -23,14 +25,15 @@ public class UserEntity {
     // Default constructor
     public UserEntity() {}
 
-    public UserEntity(String username, String password, String email) {
+    public UserEntity(BigInteger userId, String username, String password, String email) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public BigInteger getUserId() {
+        return userId;
     }
 
     public String getUsername() {
@@ -60,7 +63,7 @@ public class UserEntity {
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
