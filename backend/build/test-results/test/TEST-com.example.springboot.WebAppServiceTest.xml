@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.springboot.WebAppServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-05-07T04:07:31" hostname="MINO-DESKTOP" time="1.354">
+  <properties/>
+  <testcase name="getConversation_Success()" classname="com.example.springboot.WebAppServiceTest" time="1.337"/>
+  <testcase name="saveMessage_Success()" classname="com.example.springboot.WebAppServiceTest" time="0.014"/>
+  <system-out><![CDATA[2025-05-07T00:07:32.416-04:00  INFO 24508 --- [message-service] [    Test worker] com.example.springboot.WebAppService     : Getting conversation between: 1 and 2
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
