@@ -1,10 +1,16 @@
-## STEP 1:
-npm install
+## Bubbles-themed Frontend 🫧📱
+### STEP 0:
+    npm install # ensure this is done beforehand
 
-## STEP 2:
-npm install next@latest
+### STEP 1:
+    npm install next@latest # update is necessary for maintainability
 
-## STEP 3:
-npm run dev
+### STEP 2:
+    npm run dev
+
+### STEP 3:
+    visit webpage : http://localhost:3000
+
+
 
 
